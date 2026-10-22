@@ -1,0 +1,40 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Logout"
+tags:
+  - baseline
+  - regression
+---
+# Self-contained: works whether the app starts logged in or logged out, so the orchestrator
+# can run it after any other baseline flow.
+# In Example Notes, logout lives at the bottom of the Settings tab; there is no confirmation dialog.
+- launchApp
+- extendedWaitUntil:
+    visible:
+      id: "email_input|home_screen"     # regex: either screen
+    timeout: 20000
+- runFlow:
+    when:
+      visible:
+        id: "email_input"
+    file: login_happy_path.yaml
+    env:
+      APP_ID: ${APP_ID}
+- tapOn:
+    id: "tab_settings"
+- waitForAnimationToEnd:
+    timeout: 7500
+- scrollUntilVisible:
+    element:
+      id: "settings_logout_button"
+    direction: DOWN
+    timeout: 15000
+- tapOn:
+    id: "settings_logout_button"
+- extendedWaitUntil:
+    visible:
+      id: "email_input"
+    timeout: 15000
+- assertNotVisible:
+    id: "home_screen"

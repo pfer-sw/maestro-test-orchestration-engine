@@ -1,0 +1,33 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Complete Onboarding"
+tags:
+  - baseline
+  - smoke
+---
+# Precondition: a fresh account that has not finished onboarding (accountRequirements:
+# { traits: { onboardingComplete: false } }). Each step is optional so the flow tolerates a
+# shorter carousel; the final assertion is what proves onboarding finished.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 7500
+- tapOn:
+    id: "onboarding_next_button"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 7500
+- tapOn:
+    id: "onboarding_next_button"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 7500
+- tapOn:
+    id: "onboarding_complete_button"
+    optional: true
+- waitForAnimationToEnd:
+    timeout: 7500
+- extendedWaitUntil:
+    visible:
+      id: "home_screen"
+    timeout: 15000

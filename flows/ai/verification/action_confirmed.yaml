@@ -1,0 +1,20 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+# Selectors come from the flavor env (config/README.md → flavors.json).
+# Reusable check after an action prompt: the assistant's confirmation appeared.
+# Layer 2 (Claude) still verifies the UI actually reflects the action — a confirmation alone is
+# not a pass (guardrail claimed_action_not_performed).
+appId: ${APP_ID}
+env:                                   # defaults = Example Notes ids; the flavor env (config/flavors.json) wins
+  ASSISTANT_ACTION_CONFIRMATION: assistant_action_confirmation
+name: "AI Verification: Action Confirmation"
+tags:
+  - ai
+  - verification
+---
+- extendedWaitUntil:
+    visible:
+      id: "${ASSISTANT_ACTION_CONFIRMATION}"
+    timeout: 5000
+    optional: true
+- takeScreenshot: "ai_action_confirmation"

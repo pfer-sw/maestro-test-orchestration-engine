@@ -1,0 +1,37 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+# Selectors and the prompt come from the flavor env (config/README.md → flavors.json); AI_OUT_OF_SCOPE_PROMPT has no default.
+appId: ${APP_ID}
+env:                                   # defaults = Example Notes ids; the flavor env (config/flavors.json) wins
+  ASSISTANT_OPEN: assistant_open_button
+  PROMPT_INPUT: assistant_input
+  SUBMIT_BUTTON: assistant_send_button
+  ASSISTANT_RESPONSE: assistant_response
+  ASSISTANT_ACTION_CONFIRMATION: assistant_action_confirmation
+  LLM_TEST_TIMEOUT_MS: "15000"
+name: "AI Meta-Test: Out-of-Scope Request"
+tags:
+  - ai
+  - meta-testing
+---
+- runFlow: ../../baseline/auth/login_happy_path.yaml
+- tapOn:
+    id: "${ASSISTANT_OPEN}"
+- runFlow:
+    file: ../_subflows/send_chat_message.yaml
+    env:
+      PROMPT_INPUT: ${PROMPT_INPUT}
+      SUBMIT_BUTTON: ${SUBMIT_BUTTON}
+      MESSAGE: "${AI_OUT_OF_SCOPE_PROMPT}"
+- extendedWaitUntil:
+    visible:
+      id: "${ASSISTANT_RESPONSE}"
+    timeout: ${LLM_TEST_TIMEOUT_MS}
+- takeScreenshot: "ai_out_of_scope_response"
+- assertVisible:
+    id: "${ASSISTANT_RESPONSE}"
+# Graceful decline: still on the assistant screen, nothing else happened.
+- assertVisible:
+    id: "${PROMPT_INPUT}"
+- assertNotVisible:
+    id: "${ASSISTANT_ACTION_CONFIRMATION}"

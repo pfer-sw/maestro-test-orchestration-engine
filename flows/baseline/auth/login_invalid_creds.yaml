@@ -1,0 +1,34 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Login with Invalid Credentials"
+tags:
+  - baseline
+  - regression
+---
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 7500
+- extendedWaitUntil:
+    visible:
+      id: "email_input"
+    timeout: 10000
+- repeat:                          # clear fully: eraseText deletes only BEFORE the cursor
+    times: 3
+    commands:
+      - tapOn:
+          id: "email_input"
+      - eraseText: 120
+- inputText: "invalid@example.com"
+- tapOn:
+    id: "password_input"
+- inputText: "WrongPassword999"
+- hideKeyboard
+- tapOn:
+    id: "login_button"
+- waitForAnimationToEnd:
+    timeout: 7500
+- assertVisible:
+    id: "login_error_message"
+- assertNotVisible:
+    id: "home_screen"

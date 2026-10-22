@@ -1,0 +1,47 @@
+# ─── Secrets ──────────────────────────────────────────────────────────────────
+.env
+.env.local
+.credentials.json
+*.pem
+*.key
+
+# ─── Dependencies ─────────────────────────────────────────────────────────────
+node_modules/
+
+# ─── Run artefacts (regenerated on every run — never commit) ──────────────────
+# Screenshots and video are large binaries produced per run.
+screenshots/**
+!screenshots/**/_manifest.json
+!screenshots/.gitkeep
+video/
+*.mp4
+*.mov
+
+# Reports: keep the canonical template + generator, drop the delivered runs.
+reports/**
+!reports/_template/
+!reports/_template/**
+!reports/.gitkeep
+
+# Maestro / test runner output
+.maestro/
+coverage/snapshots/*
+!coverage/snapshots/.gitkeep
+flows/generated/**
+!flows/generated/.gitkeep
+
+# Knowledge base, split by provenance:
+#   kb/<synced>/  mirrors of upstream repos — ignored, regenerate with `npm run sync-kb`
+#   kb/local/     authored HERE, no upstream owner — tracked, this is the only copy
+kb/**
+!kb/.gitkeep
+!kb/README.md
+!kb/local/
+!kb/local/**
+
+# ─── Scratch & OS noise ───────────────────────────────────────────────────────
+.DS_Store
+.tmp_*
+*.tmp
+*.log
+dashboard.html

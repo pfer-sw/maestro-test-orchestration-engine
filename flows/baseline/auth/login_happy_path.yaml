@@ -1,0 +1,57 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Successful Login"
+tags:
+  - baseline
+  - smoke
+  - regression
+---
+# Never clearState on dev builds (it can wipe the configured endpoint). Precondition: logged out.
+- launchApp
+- waitForAnimationToEnd:
+    timeout: 4000
+
+# Dismiss notification permission dialog (first launch after install)
+- runFlow:
+    when:
+      visible:
+        id: "com.android.permissioncontroller:id/permission_deny_button"
+    commands:
+      - tapOn:
+          id: "com.android.permissioncontroller:id/permission_deny_button"
+      - waitForAnimationToEnd:
+          timeout: 7500
+
+# One-step login: email + password + login_button (reusable subflow)
+- extendedWaitUntil:
+    visible:
+      id: "email_input"
+    timeout: 10000
+- runFlow: ../_subflows/login.yaml
+- waitForAnimationToEnd:
+    timeout: 7500
+
+# Dismiss optional post-login interstitials — one `runFlow: when visible` per dialog, so the
+# flow passes whether or not it appears. Record each one in docs/app/android-automation-notes.md →
+# Interstitials (and in the account's `notes` in config/accounts.json if it is account-specific).
+- runFlow:
+    when:
+      visible:
+        id: "onboarding_skip_button"               # "Skip" on an optional post-login tour
+    commands:
+      - tapOn:
+          id: "onboarding_skip_button"
+      - waitForAnimationToEnd:
+          timeout: 7500
+- runFlow:
+    when:
+      visible: "What's new"                         # text-only sheet → testability register
+    commands:
+      - tapOn: "Got it"
+      - waitForAnimationToEnd:
+          timeout: 7500
+
+# Assert home screen is visible
+- assertVisible:
+    id: "home_screen"

@@ -1,0 +1,30 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+# Reusable: kill + relaunch the app WITHOUT clearing data, retrying once if a
+# launch-time screen wins a modal race against the screen you expect.
+#
+# Why: some state (banners, badges, refreshed lists) only shows on a cold start after the backend
+# state changes — a pull-to-refresh is not enough. If another launch-time screen (here: a
+# "What's new" modal, `whats_new_dialog`) occasionally wins the race, a second cold start is correct.
+# Record the race as a bug and reference its id in the comment below.
+#
+# NOTE: never use clearState here — on dev builds it can wipe the configured endpoint and the
+# account's local state.
+appId: ${APP_ID}
+---
+- stopApp
+- launchApp:
+    stopApp: false
+- waitForAnimationToEnd:
+    timeout: 5000
+# Race workaround: the "What's new" modal won -> relaunch once more
+- runFlow:
+    when:
+      visible:
+        id: "whats_new_dialog"
+    commands:
+      - stopApp
+      - launchApp:
+          stopApp: false
+      - waitForAnimationToEnd:
+          timeout: 5000

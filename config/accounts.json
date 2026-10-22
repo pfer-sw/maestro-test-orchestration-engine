@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0",
+  "_provisioning": "How this unit creates test accounts (tool, defaults, gotchas) — see docs/workflows/account-provisioning.md. Passwords never live here: each account names the .env key that holds it (passwordEnvVar).",
+  "accounts": [
+    {
+      "id": "example.member",
+      "email": "qa+example.member@example.com",
+      "flavor": ["main"],
+      "passwordEnvVar": "ACCOUNT_EXAMPLE_MEMBER_PASS",
+      "tags": ["baseline"],
+      "traits": {
+        "onboardingComplete": true,
+        "plan": "free"
+      },
+      "notes": "Worked example. Default account for the baseline suite: logs straight into home_screen with no interstitials. Record here any post-login dialogs and the ids that dismiss them."
+    }
+  ]
+}

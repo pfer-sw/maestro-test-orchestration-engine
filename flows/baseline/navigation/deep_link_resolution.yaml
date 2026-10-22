@@ -1,0 +1,18 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Deep Link Resolution"
+tags:
+  - baseline
+  - regression
+---
+# APP_DEEP_LINK_SETTINGS: e.g. examplenotes://settings — put it in the flavor env.
+- runFlow: ../auth/login_happy_path.yaml
+- openLink: "${APP_DEEP_LINK_SETTINGS}"
+- waitForAnimationToEnd:
+    timeout: 7500
+- assertVisible:
+    id: "settings_logout_button"
+- assertVisible:
+    id: "tab_settings"
+    selected: true

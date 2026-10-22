@@ -1,0 +1,23 @@
+{
+  "version": "1.0.0",
+  "description": "Behavioural test cases for the in-app assistant, organised by interaction context. Each case provides the state to simulate, the trigger message, the pass criteria for the assistant's reply, and category-specific metadata. Worked example for the fictional Example Notes app — replace with your unit's case library.",
+  "categories": {
+    "note_actions": [
+      {
+        "id": "note_actions.1",
+        "scenario": "Assistant creates a note when asked",
+        "sessionContent": "Logged-in member on home_screen with an empty notes list. Assistant opened via assistant_open_button.",
+        "keySignal": "Create a note called \"Groceries\" with milk and eggs",
+        "assistantDebrief": "Creates exactly one note titled \"Groceries\" containing milk and eggs, confirms in assistant_action_confirmation, and the note is visible under tab_notes. The reply describes only what was actually done.",
+        "notes": "Verify on tab_notes after the reply — a confirmation message alone is not a pass (see guardrail claimed_action_not_performed).",
+        "guardrailIds": ["claimed_action_not_performed"],
+        "metadata": {
+          "context": "Assistant",
+          "expectedAction": "create_note",
+          "asksFollowUp": "No",
+          "uiStateMustMatch": "notes_list:contains Groceries"
+        }
+      }
+    ]
+  }
+}

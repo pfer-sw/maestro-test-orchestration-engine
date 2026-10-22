@@ -1,0 +1,34 @@
+{
+  "_note": "Drives scripts/testability-report.js (HTML view of docs/testability/missing-resource-ids.md). `features` maps register rows to a product + feature: `section` is a regex tested against the text after '## Open — ' and `screen` a regex tested against the row's Screen cell; first match wins, an omitted regex matches anything. Rows no feature matches are listed under an 'Unmapped' group (the run prints a warning) — give them a home here. Product `color` is optional ({ light, dark } hex); a palette colour is used when it is missing. Inline text supports `code` and **bold**.",
+  "buildLabel": "Example Notes Android · 1.4.0",
+  "version": "1.4.0",
+  "products": [
+    {
+      "id": "notes",
+      "name": "Notes",
+      "blurb": "Example Notes app — list, editor and sync",
+      "color": { "light": "#245b8f", "dark": "#86b6e6" }
+    }
+  ],
+  "features": [
+    {
+      "product": "notes",
+      "feature": "Notes list",
+      "section": "^Notes list",
+      "impact": "Note rows are text-only, so a test cannot target a specific note when two share a title."
+    }
+  ],
+  "goodExamples": [
+    {
+      "title": "Note editor",
+      "text": "Every control has a stable id: `note_title_input`, `note_body_input`, `note_save_button`, `note_delete_button`."
+    }
+  ],
+  "renames": {
+    "heading": "Renamed in 1.4.0",
+    "items": [
+      "`notes_add_btn` → `notes_add_button` (Notes list FAB)."
+    ],
+    "note": "Renames break existing flows; please flag them in release notes."
+  }
+}

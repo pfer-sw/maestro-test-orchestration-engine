@@ -1,0 +1,19 @@
+{
+  "name": "maestro-viewer",
+  "displayName": "Maestro Viewer tab",
+  "description": "Opens the Maestro MCP viewer in a VS Code Simple Browser tab. Triggered by the Claude Code hook before each Maestro run.",
+  "version": "0.0.1",
+  "publisher": "local",
+  "engines": { "vscode": "^1.75.0" },
+  "main": "./extension.js",
+  "activationEvents": ["onUri"],
+  "contributes": {
+    "commands": [{ "command": "maestroViewer.open", "title": "Maestro: Open Viewer" }],
+    "configuration": {
+      "title": "Maestro Viewer",
+      "properties": {
+        "maestroViewer.url": { "type": "string", "default": "http://127.0.0.1:10000/", "description": "Maestro Viewer URL (from the MCP open_maestro_viewer tool)." }
+      }
+    }
+  }
+}

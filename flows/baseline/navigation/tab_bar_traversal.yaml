@@ -1,0 +1,51 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+appId: ${APP_ID}
+name: "Baseline: Tab Bar Traversal"
+tags:
+  - baseline
+  - smoke
+  - regression
+---
+# If tab screens have no stable screen-level ids, assert the tab itself became selected.
+# Precondition: logged in, on Home (e.g. after login_happy_path.yaml).
+- runFlow:
+    when:
+      visible: "Rate this app"           # optional launch popup (text-only) — dismiss if present
+    commands:
+      - tapOn: "Not now"
+- assertVisible:
+    id: "home_screen"
+- tapOn:
+    id: "tab_notes"
+- extendedWaitUntil:                   # the first-run intro renders a moment after the tab switch
+    visible: "Your notes live here|Create your first note"
+    timeout: 6000
+    optional: true
+# Pattern for a first-run intro gate: branch on its presence instead of failing. If the only
+# exit changes account data, stop and ask the tester rather than tapping through it.
+- runFlow:
+    when:
+      notVisible: "Your notes live here|Create your first note"
+    commands:
+      - assertVisible:
+          id: "tab_notes"
+          selected: true
+- runFlow:
+    when:
+      visible: "Your notes live here|Create your first note"
+    commands:
+      - pressKey: back
+      - waitForAnimationToEnd:
+          timeout: 7500
+- tapOn:
+    id: "tab_settings"
+- assertVisible:
+    id: "tab_settings"
+    selected: true
+- assertVisible:
+    id: "settings_logout_button"
+- tapOn:
+    id: "tab_home"
+- assertVisible:
+    id: "home_screen"

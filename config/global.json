@@ -1,0 +1,55 @@
+{
+  "reporting": {
+    "outputDir": "./reports",
+    "rawDir": "./reports/raw",
+    "coverageDir": "./reports/coverage",
+    "formats": [
+      "junit",
+      "html"
+    ],
+    "retainDays": 30
+  },
+  "exploration": {
+    "maxDepth": 5,
+    "screenshotOnEveryScreen": true,
+    "screenshotDir": "./screenshots/exploration",
+    "flowOutputDir": "./flows/generated",
+    "revisitThresholdDays": 7,
+    "skipSelectors": [
+      "(?i).*delete (my )?account.*",
+      "(?i).*clear (all )?data.*",
+      "(?i).*factory reset.*",
+      "(?i).*(confirm|complete|place) (purchase|order|payment).*",
+      "(?i).*(unsubscribe|cancel subscription).*"
+    ]
+  },
+  "healing": {
+    "enabled": true,
+    "maxHealAttempts": 3,
+    "screenshotOnFailure": true,
+    "failureScreenshotDir": "./screenshots/failures"
+  },
+  "jira": {
+    "projectKey": "${JIRA_PROJECT_KEY}",
+    "coverageDashboardIssueKey": "${JIRA_DASHBOARD_ISSUE_KEY}",
+    "baseUrl": "${JIRA_BASE_URL}",
+    "apiToken": "${JIRA_API_TOKEN}",
+    "userEmail": "${JIRA_USER_EMAIL}",
+    "labels": [
+      "automated-testing",
+      "maestro-mcp"
+    ],
+    "bugIssueType": "Bug",
+    "customFields": {
+      "coveragePercent": "customfield_10100",
+      "testRunDate": "customfield_10101",
+      "flavor": "customfield_10102"
+    }
+  },
+  "maestro": {
+    "workspaceDir": "./.maestro",
+    "defaultTimeoutMs": 30000,
+    "retryCount": 2,
+    "reportFormat": "junit"
+  }
+}

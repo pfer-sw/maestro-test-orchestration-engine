@@ -1,0 +1,32 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+# Reusable: one-step login (email + password on one screen -> login_button)
+# Params: TEST_USERNAME, TEST_PASSWORD
+# Precondition: app open on the login screen (email_input visible)
+#
+# NOTE: do NOT enable the Maestro IME if it renders a blank full-screen view on your devices.
+#       Keyboard auto-correct can mangle the email ("autorelease" -> "auto release"): turn
+#       auto-correct off on the test device. See docs/engine/maestro-android-notes.md -> Text entry.
+# NOTE: `hideKeyboard` (not `pressKey: back`) closes the keyboard — a blind back on a root screen
+#       with the keyboard already closed exits the app.
+appId: ${APP_ID}
+---
+- assertVisible:
+    id: "email_input"
+- repeat:                          # clear fully: eraseText deletes only BEFORE the cursor, and
+    times: 3                        # tapOn puts the cursor mid-text (field is pre-filled after logout)
+    commands:
+      - tapOn:
+          id: "email_input"
+      - eraseText: 120
+- inputText: ${TEST_USERNAME}
+- repeat:                          # clear fully (same reason as the email field)
+    times: 3
+    commands:
+      - tapOn:
+          id: "password_input"
+      - eraseText: 120
+- inputText: ${TEST_PASSWORD}
+- hideKeyboard
+- tapOn:
+    id: "login_button"

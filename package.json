@@ -1,0 +1,29 @@
+{
+  "name": "maestro-claude-test-engine",
+  "version": "1.0.0",
+  "description": "Generic mobile app testing engine using Maestro MCP with Claude as the AI brain for exploration, orchestration and meta-testing of LLM-powered app flavors. Fork it and fill in your product's knowledge.",
+  "type": "module",
+  "scripts": {
+    "explore": "node scripts/explore.js",
+    "test": "node scripts/run-tests.js",
+    "coverage": "node scripts/calculate-coverage.js",
+    "export-jira": "node scripts/export-jira.js",
+    "sync-kb": "node scripts/sync-kb.js",
+    "sync-kb-dry": "node scripts/sync-kb.js --dry-run",
+    "full-run": "node scripts/run-tests.js --flavor=all --heal && node scripts/calculate-coverage.js && node scripts/export-jira.js",
+    "dashboard": "node scripts/dashboard.js",
+    "prd-eval": "node scripts/run-scenario-eval.js",
+    "fetch-wiki": "node scripts/fetch-wiki-page.js",
+    "viewer:install": "bash tools/vscode-maestro-viewer/build-vsix.sh"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.30.0",
+    "dotenv": "^16.4.5",
+    "fast-xml-parser": "^4.3.6",
+    "js-yaml": "^4.1.0",
+    "minimist": "^1.2.8"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

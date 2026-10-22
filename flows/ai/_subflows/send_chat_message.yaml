@@ -1,0 +1,28 @@
+# Worked example for the fictional Example Notes app — replace ids with your app's (inspect_screen).
+# Every id below is illustrative; nothing here has been run against a real build.
+# Reusable: send a free-text message to the in-app assistant.
+# Params (env): MESSAGE, PROMPT_INPUT (default assistant_input), SUBMIT_BUTTON (default assistant_send_button)
+# Precondition: assistant screen open (ASSISTANT_OPEN tapped).
+#
+# ⚠ TEXT ENTRY WARNING: keyboard auto-correction (e.g. Gboard) can silently rewrite words
+# ("autorelease" -> "auto release"). `inputText` and `adb shell input text` BOTH route through the IME.
+# For any message containing an unusual token, either:
+#   (a) turn auto-correction off on the test device (durable fix), or
+#   (b) type via `adb shell "input text 'word%sword'"` (escape spaces as %s — quoting on
+#       the host does NOT survive to the device shell) and verify before sending.
+# See docs/engine/maestro-android-notes.md -> Text entry.
+# Defaults below apply when the caller omits PROMPT_INPUT / SUBMIT_BUTTON (caller env wins).
+appId: ${APP_ID}
+env:
+  PROMPT_INPUT: assistant_input
+  SUBMIT_BUTTON: assistant_send_button
+---
+- tapOn:
+    id: "${PROMPT_INPUT}"
+- inputText: ${MESSAGE}
+- assertVisible:
+    id: "${SUBMIT_BUTTON}"
+- tapOn:
+    id: "${SUBMIT_BUTTON}"
+- waitForAnimationToEnd:
+    timeout: 15000

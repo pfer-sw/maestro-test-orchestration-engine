@@ -1,0 +1,35 @@
+{
+  "maxAgeDays": 7,
+  "tokenBudgetPerEval": 6000,
+  "githubApiBase": "https://api.github.com",
+  "tokenEnvVar": "GITHUB_TOKEN",
+  "repositories": [
+    {
+      "id": "local-supplements",
+      "authored": true,
+      "outputDir": "kb/local",
+      "includeExtensions": [".md"],
+      "protocolTags": ["example-protocol", "cross-protocol"],
+      "_note": "Authored in this repo, no upstream owner. Not synced and never stale — `authored: true` exempts it from sync and staleness checks. Tracked in git: this is the only copy. Evaluator use is OPT-IN PER FILE: only files with frontmatter `evaluator: include` and a status other than `unverified` are injected (scripts/lib/kb-client.js). kb/local/release/ (runbooks) is also excluded by directory.",
+      "excludeDirs": ["release"]
+    },
+    {
+      "id": "local-source",
+      "localPath": "${KB_LOCAL_SOURCE_PATH}",
+      "_note": "Example: a sibling checkout on the tester's machine (e.g. a product-docs repo). Unset variable → source skipped.",
+      "includeDirs": ["context"],
+      "excludeDirs": ["artifacts", "notes"],
+      "includeExtensions": [".md"],
+      "protocolTags": ["example-protocol", "cross-protocol", "tone", "copy"]
+    },
+    {
+      "id": "domain-rules",
+      "owner": "${GITHUB_ORG}",
+      "repo": "<repo-name>",
+      "branch": "main",
+      "paths": ["<path-in-repo>/"],
+      "outputDir": "kb/domain",
+      "protocolTags": ["example-protocol", "cross-protocol"]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2026-10-22T17:52:53.329Z",
+  "updatedBy": "engine template (worked example — Example Notes)",
+  "features": [
+    {
+      "id": "auth",
+      "name": "Authentication",
+      "description": "Login, logout, and session management",
+      "appliesTo": [
+        "main"
+      ],
+      "flows": [
+        {
+          "id": "auth.login.happy_path",
+          "name": "Successful Login",
+          "description": "User logs in with valid credentials and reaches home_screen",
+          "flowFile": "flows/baseline/auth/login_happy_path.yaml",
+          "priority": "critical",
+          "tags": [
+            "baseline"
+          ],
+          "coverage": {
+            "main": {
+              "status": "not_covered",
+              "lastRunDate": null,
+              "lastResult": null,
+              "lastRunDurationMs": null,
+              "failureReason": null
+            }
+          }
+        },
+        {
+          "id": "auth.logout",
+          "name": "Logout",
+          "description": "User logs out from Settings and lands back on the login screen",
+          "flowFile": "flows/baseline/auth/logout.yaml",
+          "priority": "high",
+          "tags": [
+            "baseline"
+          ],
+          "coverage": {
+            "main": {
+              "status": "not_covered",
+              "lastRunDate": null,
+              "lastResult": null,
+              "lastRunDurationMs": null,
+              "failureReason": null
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "coverageSummary": {
+    "main": {
+      "total": 2,
+      "covered": 0,
+      "failing": 0,
+      "not_covered": 2,
+      "discovered": 0,
+      "skipped": 0,
+      "coveragePercent": 0,
+      "target": 70,
+      "targetMet": false
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "_comment": "Worked example. Maps screen keys to Figma frames for the design audit (docs/design-audit.md). Run scripts/save-figma-screenshots.js --figma-url=<https://www.figma.com/design/<FILE_KEY>/<file-name>> to export the frames. Map the FINAL animation frame of each screen (isFinalFrame: true).",
+  "_sections": {
+    "<section-node-id>": {
+      "name": "<Figma section name>",
+      "fileKey": "<FILE_KEY>",
+      "status": "final | concept — design still iterating",
+      "knownIssues": []
+    }
+  },
+  "screens": {
+    "auth.login": {
+      "figmaNodeId": "<node-id e.g. 1234:5678>",
+      "figmaFrameName": "Login",
+      "sequenceIndex": 0,
+      "isFinalFrame": true,
+      "notes": "Example Notes login screen: email_input, password_input, login_button."
+    }
+  }
+}
