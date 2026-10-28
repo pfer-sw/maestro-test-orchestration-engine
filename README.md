@@ -200,8 +200,8 @@ rather than at the end.
 
 The most-used mode. A release evaluation is a guided, persona-led run of a real
 build, driven by Claude with a human tester alongside (the tester does what
-Claude physically cannot — hardware-gated screens, back-office tools — and
-triages findings live). Its shape is fixed:
+Claude physically cannot — hardware-gated screens — and triages findings live;
+web back-office tools are driven by Claude via Claude in Chrome). Its shape is fixed:
 
 1. Drive the journey as one persona from `docs/personas.md`.
 2. Check what is deployed first — an undeployed feature is **BLOCKED**, never FAILED.
@@ -215,6 +215,20 @@ triages findings live). Its shape is fixed:
 Product-specific procedures and rules live in `kb/local/release/` (runbooks) and
 `kb/local/rules/` (observed product behaviour, each file marked with its
 verification status).
+
+### Planned capability — visual regression (`assertScreenshot`)
+
+*Not built yet (noted 2026-10-28).* An extension of release testing: each release candidate's stable
+screens are compared pixel-by-pixel with the previous release's, so unintended UI changes that
+functional asserts miss (spacing, colours, truncation, missing icons) become findings.
+
+- **How:** Maestro's `assertScreenshot` (2.2+) compares the screen, or one element via `cropOn`, against a
+  reference PNG with a `thresholdPercentage`; since 2.12 the diff image lands in the run's artifacts.
+- **Complements the design audit:** the Figma audit checks *build vs design*; this checks *build vs last
+  build*.
+- **Prerequisites:** one pinned device / OS / resolution / locale / theme per baseline set; stable test data;
+  crop out backend-driven or dynamic regions (dates, streaks, AI text — non-negotiable 8); a committed home
+  for baselines (`screenshots/` is gitignored), refreshed deliberately when a change is intended.
 
 ---
 

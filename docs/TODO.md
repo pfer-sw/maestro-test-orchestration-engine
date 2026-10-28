@@ -12,7 +12,7 @@ Open work for the framework. Newest items at the bottom of each section. Mark an
 
 ## Maestro 2.12 adoption (optional)
 - [ ] Dark-mode coverage with `setDarkMode` / `assertDarkMode` (2.9) on the main screens.
-- [ ] Visual regression with `assertScreenshot` on stable screens (pin the device — pixel compare is
-      device-specific).
+- [ ] **Visual regression as a release-testing extension** — planned capability, see README → Release
+      testing → "Planned capability — visual regression". Develop later.
 - [ ] Use Maestro's per-step screenshots + failure hierarchy (`--test-output-dir`, 2.7+) as failure evidence
       instead of manual captures (also avoids the spaces-in-path `takeScreenshot` bug).
