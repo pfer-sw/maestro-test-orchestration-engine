@@ -55,3 +55,5 @@ id differences from Android, interstitials) belong in [`../app/ios-automation-no
   is not visible on screen. Never assert on a screen before its real content is visible.
 - Multiplatform flows: prefer ids shared by both platforms; where they differ, keep per-platform
   subflows rather than coordinates.
+- **Physical iPhones:** Maestro 2.11+ stops listing them and fails a run early with "Physical iOS devices
+  are not yet supported". The only Maestro-YAML route to real iPhones is maestro-runner — see ED-003.

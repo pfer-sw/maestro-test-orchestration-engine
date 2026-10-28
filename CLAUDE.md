@@ -18,7 +18,8 @@ Device and tooling knowledge counts too (`docs/engine/`, `docs/app/`, `scripts/r
 
 The tester expects Claude to be **almost autonomous**: the KB answers what to tap, what to say and
 what to expect. Drive everything that has a locator; hand over only what Claude physically cannot
-do (hardware-gated screens, back-office tools without an API). Ask only when the answer changes
+do (hardware-gated screens). Web back-office tools are Claude's too, via Claude in Chrome — also the
+fallback whenever an API / key / MCP route fails ([`docs/engine/web-back-office.md`](docs/engine/web-back-office.md), ED-002). Ask only when the answer changes
 what is being tested. Needing to be guided step by step through something the KB already covers is
 a failure of this rule.
 
@@ -49,6 +50,7 @@ Flavor ids are the keys of `config/flavors.json`.
 | Product rules (how the app should behave) *(unit)* | [`kb/local/rules/`](kb/local/rules/README.md) — index + context pack in its README |
 | Generic Maestro / Android / MCP quirks, text entry, evidence | [`docs/engine/maestro-android-notes.md`](docs/engine/maestro-android-notes.md) |
 | Generic iOS simulator notes | [`docs/engine/ios-simulator-notes.md`](docs/engine/ios-simulator-notes.md) |
+| Web back-office tools (Claude in Chrome, Maestro web) | [`docs/engine/web-back-office.md`](docs/engine/web-back-office.md) |
 | Camera / video injection on the emulator | [`docs/engine/camera-injection.md`](docs/engine/camera-injection.md) |
 | Your app's ids, quirks, environments *(unit)* | [`docs/app/android-automation-notes.md`](docs/app/android-automation-notes.md) · [`docs/app/ios-automation-notes.md`](docs/app/ios-automation-notes.md) |
 | Harness patterns not shipped as code | [`docs/engine/patterns.md`](docs/engine/patterns.md) |
@@ -105,7 +107,8 @@ If the MCP returns gRPC `UNAVAILABLE` or has not been restarted since a previous
 10. **Secrets:** Claude cannot read or write `.env` / `.env.example`. Add account metadata to
     `config/accounts.json`; the tester adds passwords. Never write passwords anywhere else, except
     release reports, which state the test account's password (template rule 10), and any standard
-    test password the unit documents in `docs/workflows/account-provisioning.md`.
+    test password or non-secret back-office test login the unit documents in
+    `docs/workflows/account-provisioning.md`.
 11. **`reports/**` and `screenshots/**` stay local** (gitignored). Don't propose committing them;
     don't cite them as the only copy of knowledge — move durable facts into `kb/` or `docs/`.
 12. **Never tap** anything matching `exploration.skipSelectors` in `config/global.json`.

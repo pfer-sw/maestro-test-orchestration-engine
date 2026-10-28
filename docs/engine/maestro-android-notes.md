@@ -38,6 +38,20 @@ login, navigation, known ids) belong in [`../app/android-automation-notes.md`](.
   `adb shell dumpsys input_method | grep mInputShown=true`.
 
 ## Maestro MCP / driver
+- **Version: Maestro CLI + MCP 2.12.0** (validated 2026-10-28; changelog:
+  https://github.com/mobile-dev-inc/Maestro/blob/main/CHANGELOG.md). The MCP is the same binary started
+  as `maestro mcp`, so one upgrade covers both. Upgrade with the official installer
+  (`curl -Ls "https://get.maestro.mobile.dev" | bash`), then restart the MCP servers — they keep the old
+  jars loaded: `pkill -f "maestro.cli.AppKt mcp"`; each session reconnects on its next call. Then run
+  `maestro check-syntax <flow>` over `flows/` and fix what it rejects. The Viewer port can change.
+- What 2.11–2.12 changed: invalid `index`/`point`/scroll `speed` now fail the step (speed must be 0–100);
+  `start`/`end` inside a selector is rejected; `optional: true` is honoured on `setAirplaneMode`/`setDarkMode`
+  (values `enabled`/`disabled` only); Android tap/type wait out window animations (fixes "Device server died"
+  on slow splash handoffs); `pressKey: Tab` fixed; crashes are detected and reported (Android native, iOS by
+  process exit); `assertScreenshot` diffs go into the run's artifacts.
+- `maestro check-syntax` catches commands Maestro never had — e.g. `clearText` (use `eraseText: <n>`) and
+  `assertVisible` with `timeout:` (use `extendedWaitUntil: { visible: …, timeout: … }`). Run it on every
+  generated flow before trusting it.
 - The MCP tools are `list_devices`, `inspect_screen`, `take_screenshot`, `run` (also validates the
   YAML), plus `cheat_sheet`. Every call needs the `device_id` from `list_devices`.
 - **The MCP does not survive an overnight/weekend gap** and can hold a dead gRPC connection
@@ -57,8 +71,9 @@ login, navigation, known ids) belong in [`../app/android-automation-notes.md`](.
 ## Tooling gotchas
 - **Maestro MCP and the CLI clash.** Scripts that call `maestro hierarchy` / `maestro test`
   (`screen.sh`, `say.sh`) can kill the MCP's `run` with `UNAVAILABLE` ("Device server died during
-  deviceInfo"). In a scripted run use the CLI throughout.
-- **`takeScreenshot:` fails on a path with spaces.** Capture with `screen.sh` / `adb exec-out
+  deviceInfo"). In a scripted run use the CLI throughout. (2.12 fixed a different "Device server died" cause —
+  slow splash-screen handoffs.)
+- **`takeScreenshot:` fails on a path with spaces** (still on 2.12.0). Capture with `screen.sh` / `adb exec-out
   screencap` between Maestro calls instead.
 - Python helpers in `scripts/release-tools/` (`frames.py`, report generation) need **Pillow** in the
   active venv: `python3 -m pip install pillow`.
@@ -96,5 +111,6 @@ backend one. **Requires a debug build that logs HTTP** — on a release build `n
 ## Related
 - App-specific notes: [`../app/android-automation-notes.md`](../app/android-automation-notes.md)
 - iOS simulator: [`ios-simulator-notes.md`](ios-simulator-notes.md)
+- Web back-office tools (Claude in Chrome, Maestro web): [`web-back-office.md`](web-back-office.md)
 - Camera injection on the emulator: [`camera-injection.md`](camera-injection.md)
 - Missing ids: [`../testability/missing-resource-ids.md`](../testability/missing-resource-ids.md)

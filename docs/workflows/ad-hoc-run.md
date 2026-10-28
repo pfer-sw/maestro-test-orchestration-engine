@@ -20,8 +20,8 @@ conditions for the report matrix.
 ## 3. Division of labour
 **Claude drives everything that has a locator**: login, onboarding, prompts and modals, forms,
 assistant messages, navigation. **The tester performs only what Claude cannot**: anything that
-needs a physical action (camera, biometrics, another device), back-office tools, anything
-off-device. "I'll do step X" means *only step X* — Claude gets the app to the start of X,
+needs a physical action (camera, biometrics, another device), anything off-device. Web back-office
+tools are driven by Claude via Claude in Chrome ([`web-back-office.md`](../engine/web-back-office.md)). "I'll do step X" means *only step X* — Claude gets the app to the start of X,
 announces the handover, and resumes on the first screen after it.
 
 ## 4. Decision defaults (no need to ask)

@@ -21,6 +21,16 @@ can create a fresh account without being walked through it.
 - **Shared sandboxes drift.** An account whose features look wrong on a shared environment is most
   likely a configuration change, not an app bug — log it as NEEDS INPUT and tell the tester.
 
+## Back-office logins (optional)
+If a journey needs a web back-office tool (clinician / agent / admin portal) and its **test** logins are
+not secret internally, list them here so Claude can log in as the right user with Claude in Chrome
+([`../engine/web-back-office.md`](../engine/web-back-office.md)). Test environments only — never
+production. Record which back-office user an account landed on (it may differ from what was requested).
+
+| Environment | User (id) | Login | Password |
+|---|---|---|---|
+| *(example — replace)* staging | Example Agent (1) | `example.agent` | `<test password>` |
+
 ## Your method
 Replace this section with your unit's procedure. Cover:
 
