@@ -18,6 +18,10 @@ can create a fresh account without being walked through it.
   whose state is unknown. Never reuse an email; bump a numeric suffix.
 - **Record what you got, not what you asked for.** If the tool assigns different attributes than
   requested, record the actual values in `config/accounts.json` and in the report.
+- **A failed or rejected create can still consume the identifier.** Registration often happens before the step that
+  fails (and a call cancelled mid-way may have run on the tool's side), so the retry hits "email in use". After the
+  **first** precondition failure, stop and ask the tester — the cause is usually the environment's configuration — instead
+  of cycling inputs and burning identifiers. Record consumed identifiers as burners.
 - **Shared sandboxes drift.** An account whose features look wrong on a shared environment is most
   likely a configuration change, not an app bug — log it as NEEDS INPUT and tell the tester.
 

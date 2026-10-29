@@ -61,6 +61,11 @@ script's header for arguments):
 - While the tester performs a hand-off step, poll for the screen that follows it and take over on arrival.
 - Keep `RUN_LOG.md` in `reports/<run>/` with timestamps: every message sent, every reply
   (verbatim), every hand-off.
+- **Multi-day runs: end each day with a handoff section** in the run log — device + account left logged in, each
+  account's state (what is pending, which reminders / scheduled events are due and when), what to check first next
+  day, open bugs blocking an account. Mirror the next steps into `docs/TODO.md`; the run log is local.
+- A finding the tester wants to act on now → single-bug report + `docs/bugs.md` row
+  ([`BUG_REPORT_TEMPLATE.md`](../../reports/_template/bug-report/BUG_REPORT_TEMPLATE.md)).
 
 ## 7. Report
 Release template ([`RELEASE_REPORT_TEMPLATE.md`](../../reports/_template/RELEASE_REPORT_TEMPLATE.md)),
