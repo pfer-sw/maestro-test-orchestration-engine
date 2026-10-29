@@ -60,6 +60,7 @@ Flavor ids are the keys of `config/flavors.json`.
 | Personas *(unit)* | [`docs/personas.md`](docs/personas.md) |
 | Creating test accounts *(unit)* | [`docs/workflows/account-provisioning.md`](docs/workflows/account-provisioning.md) |
 | Release runbooks *(unit)* | `kb/local/release/` — start from [`_runbook-template.md`](kb/local/release/_runbook-template.md) |
+| Bug tracker + single-bug HTML report *(unit data)* | [`docs/bugs.md`](docs/bugs.md) · [`reports/_template/bug-report/BUG_REPORT_TEMPLATE.md`](reports/_template/bug-report/BUG_REPORT_TEMPLATE.md) |
 | Release report template (canonical) | [`reports/_template/RELEASE_REPORT_TEMPLATE.md`](reports/_template/RELEASE_REPORT_TEMPLATE.md) |
 | Testability register *(unit data)* | [`docs/testability/missing-resource-ids.md`](docs/testability/missing-resource-ids.md) |
 | Knowledge base sources | [`kb/README.md`](kb/README.md) · `config/kb.json` |

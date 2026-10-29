@@ -1,0 +1,80 @@
+{
+ "id": "BUG-001",
+ "title": "Assistant confirms a share that was never sent",
+ "short_title": "Share not sent",
+ "subtitle": "Example Notes 1.4.0 (140) \u00b7 Android \u00b7 dev \u00b7 2026-01-15",
+ "severity": "High \u2014 user believes the note was shared",
+ "layer": "Layer: assistant (tool not called)",
+ "status": "Status: confirmed, 2/2",
+ "summary": "Asked to share a note, the assistant replied \"Done! I've shared Groceries\", but no share request was sent and the note's share list stayed empty.",
+ "environment": [
+  [
+   "Build",
+   "Example Notes 1.4.0 (140), dev build"
+  ],
+  [
+   "Device",
+   "Pixel 7 emulator, Android 14"
+  ],
+  [
+   "Backend",
+   "dev"
+  ],
+  [
+   "Account",
+   "<code>example.member</code>"
+  ]
+ ],
+ "steps": [
+  "Open the assistant from the notes list.",
+  "Send \"share Groceries with Sam\".",
+  "Open Groceries \u2192 Sharing."
+ ],
+ "expected_actual": [
+  [
+   "The share tool is called, the note lists Sam (rules: <code>notes-rules.md</code> S2)",
+   "\"Done! I've shared Groceries\" \u2014 share list empty"
+  ]
+ ],
+ "evidence": [
+  {
+   "title": "Evidence \u2014 app traffic",
+   "pre": "10:02:11 --> POST /assistant/messages   <-- 200\nno POST /notes/{id}/shares in the window",
+   "note": "The app sent the message; no share request followed."
+  },
+  {
+   "title": "Evidence \u2014 AI traces",
+   "table": {
+    "head": [
+     "Time",
+     "Trigger",
+     "Assistant"
+    ],
+    "rows": [
+     [
+      "10:02:11",
+      "user message",
+      "replied without calling <code>share_note</code>"
+     ]
+    ]
+   }
+  }
+ ],
+ "screenshots": [
+  {
+   "file": "screenshots/test_runs/2026-01-15/bug_01_share_reply.png",
+   "caption": "10:02 \u2014 the confirmation"
+  }
+ ],
+ "analysis": [
+  "App and backend fine: the tool was never called \u2014 the model answered from the prompt."
+ ],
+ "impact": [
+  "Any share request through the assistant can silently fail."
+ ],
+ "questions": [
+  "Can the share tool call be made mandatory before a confirmation?"
+ ],
+ "footer": "Tracker: docs/bugs.md",
+ "out": "reports/release_eval_1.4.0_2026-01-15/BUG-001_share_not_sent.html"
+}
