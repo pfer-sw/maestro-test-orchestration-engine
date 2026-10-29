@@ -68,6 +68,9 @@ a persona journey. If the assistant escalates **unexpectedly**, stop and tell th
 - Protocol cases (`metadata.protocol`) use the KB evaluator — see `CLAUDE.md` → Knowledge base.
 - Check `net.sh calls <since>` when the verdict depends on whether the app sent a request
   (app gap vs backend/AI gap).
+- **If the unit has AI traces, read the trace before any FAIL, finding or NEEDS INPUT** (`npm run trace -- <id>`,
+  [`docs/engine/llm-traces.md`](../engine/llm-traces.md)). Log the rule the assistant applied; behaviour that follows a
+  documented rule is not a finding. Hidden states (labels, modes) are read from the trace, never inferred from the chat.
 - Assistant-service instability (no reply, timeouts) is out of scope unless the tester says
   otherwise — log it with timestamps, don't score it as behaviour.
 

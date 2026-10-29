@@ -1,0 +1,21 @@
+{
+  "_note": "Optional — only for units whose in-app assistant is traced (Langfuse today). Drives scripts/llm-trace.js (`npm run trace`). Delete the file if the unit has no traces. Keys: one public/secret pair per project in .env (names below); the tester adds them, Claude never reads .env. See docs/engine/llm-traces.md.",
+  "provider": "langfuse",
+  "host": "https://langfuse.example.com",
+  "hostEnvVar": "LLM_TRACE_HOST",
+  "lookup": {
+    "description": "conversation or user id",
+    "metadataKey": "conversation_id"
+  },
+  "defaultProject": "assistant",
+  "projects": {
+    "assistant": {
+      "name": "example-notes-assistant",
+      "explains": "assistant turns: what woke it, its reasoning, the tools it called, what it sent",
+      "publicKeyEnvVar": "LLM_TRACE_ASSISTANT_PUBLIC_KEY",
+      "secretKeyEnvVar": "LLM_TRACE_ASSISTANT_SECRET_KEY",
+      "triggerFields": ["event_type", "trigger_events"],
+      "outputFlags": { "no_action (abstained)": "no_action" }
+    }
+  }
+}

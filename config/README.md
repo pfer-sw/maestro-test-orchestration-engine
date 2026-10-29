@@ -15,6 +15,7 @@ Each file ships with **one worked example** for the fictional *Example Notes* ap
 | `testability.json` | Product / feature map used to group the testability register | `scripts/testability-report.js` |
 | `test-cases.json` | Assistant behavioural case library | behavioural / release runs |
 | `guardrails.json` | Assistant guardrail definitions | behavioural / release runs, dual score |
+| `llm-trace.json` | *Optional* — AI trace source (host, projects, key env var names, lookup field) | `scripts/llm-trace.js`, `docs/engine/llm-traces.md` |
 | `figma-mapping.json` | Screen key → Figma frame | `save-figma-screenshots.js`, `generate-design-audit-report.js` |
 | `matrices/` | *Optional unit slot* — feature test matrices (`<feature>.json`) | manual / scripted evals |
 | `../coverage/taxonomy.json` | Feature → flow map and per-flavor coverage (schema below) | `scripts/lib/coverage-tracker.js`, run-tests, calculate-coverage, explore |

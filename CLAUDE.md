@@ -53,6 +53,7 @@ Flavor ids are the keys of `config/flavors.json`.
 | Web back-office tools (Claude in Chrome, Maestro web) | [`docs/engine/web-back-office.md`](docs/engine/web-back-office.md) |
 | Camera / video injection on the emulator | [`docs/engine/camera-injection.md`](docs/engine/camera-injection.md) |
 | Your app's ids, quirks, environments *(unit)* | [`docs/app/android-automation-notes.md`](docs/app/android-automation-notes.md) · [`docs/app/ios-automation-notes.md`](docs/app/ios-automation-notes.md) |
+| AI assistant reasoning traces (optional, read-only) | [`docs/engine/llm-traces.md`](docs/engine/llm-traces.md) · `npm run trace -- <id>` · `config/llm-trace.json` |
 | Harness patterns not shipped as code | [`docs/engine/patterns.md`](docs/engine/patterns.md) |
 | Project to-do *(unit)* | [`docs/TODO.md`](docs/TODO.md) |
 | Feature specs + matrices *(unit)* | Specs (prose) in `docs/specs/` (create as needed); machine-readable test matrices in `config/matrices/` (schema: `config/README.md`) |

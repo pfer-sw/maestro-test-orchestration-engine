@@ -14,7 +14,8 @@
     "dashboard": "node scripts/dashboard.js",
     "prd-eval": "node scripts/run-scenario-eval.js",
     "fetch-wiki": "node scripts/fetch-wiki-page.js",
-    "viewer:install": "bash tools/vscode-maestro-viewer/build-vsix.sh"
+    "viewer:install": "bash tools/vscode-maestro-viewer/build-vsix.sh",
+    "trace": "node scripts/llm-trace.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.30.0",

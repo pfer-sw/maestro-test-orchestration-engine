@@ -19,6 +19,24 @@ Newest first. Each entry: context, decision, rationale, and revisit conditions.
 
 ---
 
+## ED-004 — Read the assistant's traces before scoring it (2026-10-29)
+
+**Context:** assistant decisions that decide a verdict are invisible in the app — internal classifications, which rule
+made it send or hold something, whether a backend event ever reached it. In the Thrive unit's run (2026-10-29) a
+"bug" was withdrawn in minutes because the trace quoted the rule it followed, and a real bug (a completion event never
+reaching the assistant) was placed in the right layer by combining the trace with `net.sh`.
+
+**Decision:** optional engine capability: `scripts/llm-trace.js` (`npm run trace`), configured per unit in
+`config/llm-trace.json`; Langfuse as the first adapter. `ai-behavioural-run.md` §4 makes "read the trace before any
+FAIL / finding / NEEDS INPUT" a standing step for units that have traces.
+
+**Rationale:** a script with `.env` keys works on day one with keys the tester already has; an MCP server is nicer
+mid-run but needs a token set up outside the repo — allowed as an alternative at local scope.
+
+**Revisit if:** a unit uses another tracing tool (add an adapter), or the AI team publishes a shared read-only MCP.
+
+---
+
 ## ED-003 — maestro-runner evaluated, parked (2026-10-28)
 
 **Context:** maestro-runner (https://github.com/devicelab-dev/maestro-runner, Go, Apache-2.0) runs Maestro
