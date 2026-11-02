@@ -22,6 +22,12 @@ can create a fresh account without being walked through it.
   fails (and a call cancelled mid-way may have run on the tool's side), so the retry hits "email in use". After the
   **first** precondition failure, stop and ask the tester — the cause is usually the environment's configuration — instead
   of cycling inputs and burning identifiers. Record consumed identifiers as burners.
+- **Keep an account's attributes consistent with what the tool assigns by default.** A provisioning tool may set one
+  attribute from a default (plan, program, protocol) regardless of another you chose (condition, region, tier). The
+  mismatched account can render broken screens that look exactly like app bugs. Pick values that match the defaults, or
+  pass the matching value explicitly — and write the rule next to the field in "Your method".
+- **Before filing a screen-state bug, run a control:** the same build with a known-good account (another env or an
+  older account). Same symptom → build; control fine → account/data/env. One control saves hours of blaming the app.
 - **Shared sandboxes drift.** An account whose features look wrong on a shared environment is most
   likely a configuration change, not an app bug — log it as NEEDS INPUT and tell the tester.
 

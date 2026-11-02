@@ -55,5 +55,23 @@ id differences from Android, interstitials) belong in [`../app/ios-automation-no
   is not visible on screen. Never assert on a screen before its real content is visible.
 - Multiplatform flows: prefer ids shared by both platforms; where they differ, keep per-platform
   subflows rather than coordinates.
+- **Inspect via the CLI on iOS.** The Maestro MCP's `inspect_screen` can open a Maestro Viewer window on every call. Use
+  `maestro --device <udid> hierarchy` (≈15 s per dump) and `maestro --device <udid> test <flow>.yaml` instead, and
+  `xcrun simctl io <udid> screenshot` for captures.
+- **Start every standalone flow with `launchApp`.** Between separate `test` runs the app can drop to the home screen.
+- **Pre-filled text fields:** `eraseText` only deletes *before* the cursor, and `tapOn` puts the cursor where it lands
+  (often mid-text) — the old value's tail survives. Clear with `repeat` ×3 of `tapOn` + `eraseText` (same as Android).
+- **Number pad keyboards** have no Done/return key: `hideKeyboard` fails. Tap an empty area of the screen (not a label) to
+  close it. While the keypad is up, a `tapOn` aimed at a button it covers types a digit instead.
+- **`retryTapIfNoChange` (default on) taps twice when the hierarchy doesn't change** — toggles (pause/resume, play)
+  flip back. Use `retryTapIfNoChange: false` on toggles.
+- **Overlays that close themselves within a second or two** can't be read with a separate hierarchy dump. Act on them in
+  the same flow (tap, then tap the option right after), or hand the step to the tester.
+- **Modals queued for launch** (celebrations, promo sheets) may show on the *next* cold start rather than inline, and
+  two modals can race — relaunch before asserting one, and log which one won.
+- **StoreKit review prompt ("Enjoying <App>?")** on the simulator: its buttons don't respond (to Maestro or a click).
+  Kill and relaunch the app.
+- **Document picker taps are flaky** (a tap on `"<file>, <kind>"` can report success without selecting). Check the
+  screen after the tap; retry once, then ask the tester to pick.
 - **Physical iPhones:** Maestro 2.11+ stops listing them and fails a run early with "Physical iOS devices
   are not yet supported". The only Maestro-YAML route to real iPhones is maestro-runner — see ED-003.
