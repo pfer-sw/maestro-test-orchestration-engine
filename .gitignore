@@ -22,6 +22,7 @@ reports/**
 !reports/_template/
 !reports/_template/**
 !reports/.gitkeep
+!reports/README.md
 
 # Maestro / test runner output
 .maestro/

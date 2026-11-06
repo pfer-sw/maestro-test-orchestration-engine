@@ -3,7 +3,7 @@
 **Status: this is THE template for all release testing.** Do not invent a new report format —
 extend this one.
 
-**Reference output:** your unit's latest delivered report, highest `_vN` in `reports/release_eval_<VERSION>_<DATE>/`
+**Reference output:** your unit's latest delivered report, highest `_vN` in `reports/releases/<VERSION>/release_eval_<VERSION>_<DATE>/`
 (local only — `reports/**` is gitignored). Record its path here once you have one.
 **Generator:** `reports/_template/generator/example_report.py` (worked example — see its README)
 
@@ -92,13 +92,13 @@ A `.jumpbar` of anchor links sits directly under the header. Footnote closes the
 
 ## How to run it
 
-1. Copy `reports/_template/generator/example_report.py` to `reports/release_eval_<VERSION>_<DATE>/generator.py`.
+1. Copy `reports/_template/generator/example_report.py` to `reports/releases/<VERSION>/release_eval_<VERSION>_<DATE>/generator.py`.
 2. Edit its DATA section — plain Python lists / dicts, one worked example entry each:
    `MATRIX` (area → rows), `FINDINGS` / `WITHDRAWN`, `GUARDRAILS`, `NEXT`, `MOM_DATA` (journey
    moments), `AUDIT` (Figma vs app), `TROWS` (testability), `FLOWS`, plus build / device / account.
-3. Run it: `python3 reports/release_eval_<VERSION>_<DATE>/generator.py --date <DATE> --out <file>`
+3. Run it: `python3 reports/releases/<VERSION>/release_eval_<VERSION>_<DATE>/generator.py --date <DATE> --out <file>`
    (`--shots`, `--figma-mapping`, `--figma-manifest` optional). Screenshots are resized and embedded.
-4. Output goes to `reports/release_eval_<VERSION>_<DATE>/` (e.g. `release_eval_1.2.0_2026-01-15`). The release tag is also in every file name: `<platform>_<product>_release_eval_<VERSION>_<DATE>_vN.html`, `RUN_LOG_<VERSION>.md`.
+4. Output goes to `reports/releases/<VERSION>/release_eval_<VERSION>_<DATE>/` (e.g. `releases/1.2.0/release_eval_1.2.0_2026-01-15`). The release tag is also in every file name: `<platform>_<product>_release_eval_<VERSION>_<DATE>_vN.html`, `RUN_LOG_<VERSION>.md`.
 
 **Versioning:** never overwrite a delivered report. New revision = `_v2`, `_v3`.
 

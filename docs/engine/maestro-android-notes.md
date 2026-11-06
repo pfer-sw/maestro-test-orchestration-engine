@@ -73,6 +73,8 @@ login, navigation, known ids) belong in [`../app/android-automation-notes.md`](.
   (`screen.sh`, `say.sh`) can kill the MCP's `run` with `UNAVAILABLE` ("Device server died during
   deviceInfo"). In a scripted run use the CLI throughout. (2.12 fixed a different "Device server died" cause —
   slow splash-screen handoffs.)
+- **Stale processes slow every call.** MCP servers, CLI JVMs and the iOS simulator-server from earlier sessions keep
+  running after the session ends. Run `scripts/release-tools/cleanup.sh --kill` at the start of each run.
 - **`takeScreenshot:` fails on a path with spaces** (still on 2.12.0). Capture with `screen.sh` / `adb exec-out
   screencap` between Maestro calls instead.
 - Python helpers in `scripts/release-tools/` (`frames.py`, report generation) need **Pillow** in the
@@ -94,6 +96,8 @@ backend one. **Requires a debug build that logs HTTP** — on a release build `n
 - `net.sh calls [HH:MM:SS]`: request/response summary since a time. Run it right after any action
   whose backend effect matters (leaving a player, submitting a form, sending a message).
 - `net.sh grep <regex>`: full lines (headers + bodies) for one endpoint.
+- **`net.sh` sees REST only, not websocket emits** (chat send, delete, typing indicators often go over a socket).
+  "No request in net.log" does not prove the app sent nothing — check the screen and the backend before concluding.
 - **Logs contain `Authorization` headers and cookies.** `net.sh` redacts them; never save raw
   `adb logcat` output.
 - Which backend is the build pointing at? Trigger any request and read the host:

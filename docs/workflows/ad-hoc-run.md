@@ -54,12 +54,13 @@ script's header for arguments):
 | `screen.sh <label>` | every interaction: screenshot + hierarchy + element list |
 | `capture-video.sh <name>` | **start in the background at the first device action**; continuous video in segments until stopped. Covers waits and tester hand-offs |
 | `burst.sh start\|stop <name>` + `frames.py` | auto-advancing screens / animations → distinct-frame contact sheets |
+| `cleanup.sh [--kill]` | **first thing, every run**: lists Maestro MCP/CLI, simulator-server, logcat and screenrecord processes left from earlier days; `--kill` closes them (they slow every Maestro call). Today's processes are left alone |
 | `relaunch.sh <name>` | cold start without `clearState`, captures the first destination |
 | `say.sh "<msg>" <label> [wait_s]` | send an assistant/chat message as the member, wait, capture `<label>_sent/_response` and print the reply text; hides the keyboard only when shown |
 | `net.sh start\|stop\|calls\|grep` | HTTP traffic from logcat (debug builds) — app vs backend |
 
 - While the tester performs a hand-off step, poll for the screen that follows it and take over on arrival.
-- Keep `RUN_LOG.md` in `reports/<run>/` with timestamps: every message sent, every reply
+- Keep `RUN_LOG.md` in `reports/adhoc/<topic>_<date>/` (folder map: [`reports/README.md`](../../reports/README.md)) with timestamps: every message sent, every reply
   (verbatim), every hand-off.
 - **Multi-day runs: end each day with a handoff section** in the run log — device + account left logged in, each
   account's state (what is pending, which reminders / scheduled events are due and when), what to check first next

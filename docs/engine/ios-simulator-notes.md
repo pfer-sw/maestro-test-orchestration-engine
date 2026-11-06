@@ -73,5 +73,14 @@ id differences from Android, interstitials) belong in [`../app/ios-automation-no
   Kill and relaunch the app.
 - **Document picker taps are flaky** (a tap on `"<file>, <kind>"` can report success without selecting). Check the
   screen after the tap; retry once, then ask the tester to pick.
+- **SpringBoard crash:** SpringBoard and the app can crash together inside `XCTAutomationSupport` (Maestro's XCUITest
+  layer; `~/Library/Logs/DiagnosticReports/SpringBoard-*.ips`). Not an app bug — `xcrun simctl shutdown <udid>` /
+  `boot <udid>` and relaunch.
+- **Video capture:** `xcrun simctl io <udid> recordVideo --codec h264 --force <file>.mp4` (stop with
+  `pkill -INT -f recordVideo`), then `ffmpeg -i <file>.mp4 -vf fps=10 frame_%04d.png` for frames. **Simulator timings are
+  not reliable** for sub-second requirements — measure those on a device.
+- **No push on the simulator:** a dev build on the simulator gets no APNs push. Verify push / reminder behaviour on a
+  physical device.
+- **The keyboard stays up after a chat send** — `hideKeyboard` before screenshots.
 - **Physical iPhones:** Maestro 2.11+ stops listing them and fails a run early with "Physical iOS devices
   are not yet supported". The only Maestro-YAML route to real iPhones is maestro-runner — see ED-003.

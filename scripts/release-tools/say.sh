@@ -8,6 +8,8 @@
 #   assistantLabel / userLabel  → accessibility labels of chat bubbles (printed as [label])
 #   openAssistant               → if a `text:` selector, its label is dropped from the printed transcript
 # SAY_SKIP_TEXTS="a|b"          → extra screen texts (e.g. chat header) to drop from the transcript.
+# SAY_FAIL_TEXT="…"             → the app's failed-send bubble text (default "Message not sent"); found on screen
+#                                 after the send → exit 2, so scripted loops stop instead of drifting out of order.
 source "$(dirname "$0")/_env.sh"; MSG="$1"; L="$2"; WAIT="${3:-30}"
 [ -z "$MSG" ] || [ -z "$L" ] && { echo "usage: say.sh \"<message>\" <label> [wait_s]"; exit 1; }
 hide_kb() { adb -s "$DEVICE" shell dumpsys input_method | grep -q "mInputShown=true" && adb -s "$DEVICE" shell input keyevent 4; }
@@ -50,3 +52,8 @@ lines = [x for _, x in sorted(out)]
 start = next((i for i, x in enumerate(lines) if x.startswith(sys.argv[2][:30])), 0)
 print("\n".join("  " + x for x in lines[start:] if x not in skip))
 PY
+# Send-failure check: a socket send can fail silently and later replies arrive out of order. Caveat: an older failed
+# bubble still on screen also matches — retry or clear it first.
+H="$SHOTS/hierarchy/${L}_response.json"
+if [ -f "$H" ] && grep -qF "${SAY_FAIL_TEXT:-Message not sent}" "$H"; then
+  echo "SEND FAILED: '${SAY_FAIL_TEXT:-Message not sent}' on screen — retry or resend before continuing"; exit 2; fi

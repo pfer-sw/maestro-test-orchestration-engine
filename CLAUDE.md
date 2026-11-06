@@ -360,6 +360,7 @@ from [`_runbook-template.md`](kb/local/release/_runbook-template.md).
 | Healed flow | `{original}_healed_{n}.yaml` | `auth_login_happy_path_healed_1.yaml` |
 | Generated AI flow | `ai_{category}_{description}.yaml` | `ai_adversarial_ignore_instructions.yaml` |
 | Exploration screenshot | `{timestamp}_{screenId}_{context}.png` | `20260310-120000_profile_exploration.png` |
+| Report folder (map: [`reports/README.md`](reports/README.md)) | release run → `reports/releases/<version>/release_eval_<version>_<date>[_<platform>]/` · feature eval (own schedule, may span builds/envs) → `reports/features/<feature>_eval_<start date>/` · ad-hoc check / retest → `reports/adhoc/<topic>_<date>/` | `releases/1.2.0/release_eval_1.2.0_2026-01-15`, `features/onboarding_eval_2026-01-10` |
 | Coverage snapshot | `{YYYY-MM-DD_HH-MM}/{flavor}.coverage.json` | `2026-03-10_12-00/main.coverage.json` |
 
 Flow locations: `flows/baseline/` (all flavors), `flows/<flavor>/<suite>/` (product release suites),
