@@ -66,6 +66,7 @@ Flavor ids are the keys of `config/flavors.json`.
 | Testability register *(unit data)* | [`docs/testability/missing-resource-ids.md`](docs/testability/missing-resource-ids.md) |
 | Knowledge base sources | [`kb/README.md`](kb/README.md) · `config/kb.json` |
 | Wiki pages mirrored locally | `npm run fetch-wiki -- <url\|slugId> --out=kb/wiki/<name>.md` (`WIKI_BASE_URL` + `WIKI_API_KEY`) |
+| Filing run results + evidence on a Gyro ticket (Hound test cases) | [`docs/workflows/hound-reporting.md`](docs/workflows/hound-reporting.md) · `npm run hound-report -- <hound.json>` · `npm run hound-status` |
 | Engineering decisions | [`docs/engineering-decisions.md`](docs/engineering-decisions.md) |
 | Wins (release-changing catches + the habit behind each) *(unit)* | [`docs/wins.md`](docs/wins.md) — add an entry when the tester credits a catch |
 
@@ -114,6 +115,10 @@ If the MCP returns gRPC `UNAVAILABLE` or has not been restarted since a previous
 11. **`reports/**` and `screenshots/**` stay local** (gitignored). Don't propose committing them;
     don't cite them as the only copy of knowledge — move durable facts into `kb/` or `docs/`.
 12. **Never tap** anything matching `exploration.skipSelectors` in `config/global.json`.
+13. **Hound is mandatory.** A run that verifies a ticket's change files its pass/fail cases on the ticket
+    (`hound.json` → `npm run hound-report`); exploratory / investigation / tooling / no-ticket runs write
+    `{"skip": "<reason>"}`. `npm run hound-status` must be clean before a run is done —
+    [`docs/workflows/hound-reporting.md`](docs/workflows/hound-reporting.md).
 
 ## Unit-specific rules
 

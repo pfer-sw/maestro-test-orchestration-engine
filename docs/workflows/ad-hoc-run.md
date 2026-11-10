@@ -72,6 +72,7 @@ script's header for arguments):
 Release template ([`RELEASE_REPORT_TEMPLATE.md`](../../reports/_template/RELEASE_REPORT_TEMPLATE.md)),
 scoped: the header names the change under test and environment; legs not exercised are
 `NOT TESTED` rows, never omitted. Rules learnt go to `kb/local/rules/` as usual.
+Then file the results on the ticket in Hound, or state why not — [`hound-reporting.md`](hound-reporting.md).
 
 ## 8. Environments
 How each environment is selected in the app and what differs between them — one line per
