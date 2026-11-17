@@ -87,6 +87,9 @@ A `.jumpbar` of anchor links sits directly under the header. Footnote closes the
      gets a reply").
    - A finding the team confirms is **fixed** is removed from the next version, together with its
      matrix row.
+12. **Scope line first, OK'd by the tester before generating** — and no finding called "new" without the
+   history check. Both in [`docs/workflows/claims-and-scope.md`](../../docs/workflows/claims-and-scope.md).
+   Hand-off prints the absolute path + `open -R`.
 
 ---
 

@@ -69,6 +69,7 @@ script's header for arguments):
   ([`BUG_REPORT_TEMPLATE.md`](../../reports/_template/bug-report/BUG_REPORT_TEMPLATE.md)).
 
 ## 7. Report
+**First:** the scope line, OK'd by the tester, and the "new?" history check — [`claims-and-scope.md`](claims-and-scope.md).
 Release template ([`RELEASE_REPORT_TEMPLATE.md`](../../reports/_template/RELEASE_REPORT_TEMPLATE.md)),
 scoped: the header names the change under test and environment; legs not exercised are
 `NOT TESTED` rows, never omitted. Rules learnt go to `kb/local/rules/` as usual.

@@ -13,12 +13,21 @@ appId: ${APP_ID}
 ---
 - assertVisible:
     id: "email_input"
-- repeat:                          # clear fully: eraseText deletes only BEFORE the cursor, and
-    times: 3                        # tapOn puts the cursor mid-text (field is pre-filled after logout)
+- longPressOn:                     # field is pre-filled after logout; a long press often selects the whole
+    id: "email_input"               # email (smart selection) → one delete clears it (~10 s vs ~30 s)
+- eraseText: 1
+- runFlow:
+    when:
+      visible:                      # fallback: the long press selected one word only.
+        id: "email_input"           # Scoped to the field: a bare ".*@.*" also matches the keyboard's "@" key
+        text: ".*@.*"
     commands:
-      - tapOn:
-          id: "email_input"
-      - eraseText: 120
+      - repeat:                     # eraseText deletes only BEFORE the cursor, and
+          times: 3                  # tapOn puts the cursor mid-text
+          commands:
+            - tapOn:
+                id: "email_input"
+            - eraseText: 120
 - inputText: ${TEST_USERNAME}
 - repeat:                          # clear fully (same reason as the email field)
     times: 3

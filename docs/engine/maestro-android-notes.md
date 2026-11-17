@@ -20,7 +20,11 @@ login, navigation, known ids) belong in [`../app/android-automation-notes.md`](.
 
 ## Text entry
 - **Clearing a field:** `tapOn` lands mid-text and `eraseText` deletes only before the cursor, so one
-  pass leaves the tail. Repeat `tapOn` + `eraseText: 120` three times.
+  pass leaves the tail. Repeat `tapOn` + `eraseText: 120` three times (~30 s).
+  **Faster:** `longPressOn` the field, then `eraseText: 1`. On many keyboards (e.g. Samsung) smart selection
+  highlights a whole email, so one delete clears it (~10 s). Keep the triple erase as a `when:` fallback.
+- **A bare text regex also matches the keyboard.** `visible: ".*@.*"` matched the keyboard's "@" key. Scope
+  the check to the element: `visible: { id: "<field id>", text: ".*@.*" }`.
 - **Do not enable Maestro's IME** (`dev.mobile.maestro/.input.MaestroInputMethodService`). It
   renders a full-screen blank view that `hideKeyboard` does not dismiss.
 - **Gboard auto-correct rewrites input** (e.g. `autorelease` → `auto release`). Both Maestro
@@ -69,6 +73,15 @@ login, navigation, known ids) belong in [`../app/android-automation-notes.md`](.
   capture is more reliable than tight hierarchy polling.
 
 ## Tooling gotchas
+- **CLI for devices, MCP for web.** Every Maestro **MCP** call (`run`, `inspect_screen`, `take_screenshot`) opens a
+  new Maestro Viewer tab in the IDE/browser. For device runs use the CLI: `maestro --device <id> test <flow.yaml>`
+  (+ `-e KEY=value`), `maestro --device <id> hierarchy`, `adb exec-out screencap -p`. Keep the MCP for `chromium`.
+- **Hard timeout on every Maestro CLI call.** A `maestro test` run once hung ~35 min after its last step had
+  completed. Wrap every call and carry on if it fires — macOS has no `timeout`, use perl:
+  `perl -e 'alarm shift; exec @ARGV' 90 ~/.maestro/bin/maestro --device <id> test <flow>` (90 s for a flow,
+  40 s for `hierarchy`).
+- **One Maestro process at a time.** Never run a background hierarchy-poll loop while another Maestro call drives
+  the device: two processes collided twice in one day (a send was lost, a stray BACK closed the app).
 - **Maestro MCP and the CLI clash.** Scripts that call `maestro hierarchy` / `maestro test`
   (`screen.sh`, `say.sh`) can kill the MCP's `run` with `UNAVAILABLE` ("Device server died during
   deviceInfo"). In a scripted run use the CLI throughout. (2.12 fixed a different "Device server died" cause —

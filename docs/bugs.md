@@ -4,6 +4,8 @@ Every bug Claude or the tester confirms on a run gets a row here (append only �
 The **summary below the table is the durable record**; the HTML report is local evidence (`reports/**` is gitignored), so
 a lost report must not lose the facts. How to write one: [`reports/_template/bug-report/BUG_REPORT_TEMPLATE.md`](../reports/_template/bug-report/BUG_REPORT_TEMPLATE.md).
 
+**Before adding a row:** grep this table + the testability register for the same symptom — duplicates and "new" claims
+cost trust ([`claims-and-scope.md`](workflows/claims-and-scope.md) § 1).
 **Ids:** global `BUG-NNN`, next free number.
 **Status:** `candidate` → `confirmed` → `ticketed` → `fixed` (build) / `won't fix` / `withdrawn` (with the reason).
 **Layer:** where the traffic and the AI trace put it — `app` · `backend` · `AI pipeline` (events between backend and the

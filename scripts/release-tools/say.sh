@@ -27,12 +27,13 @@ IFS=$'\x1f' read -r PROMPT_INPUT SUBMIT_BUTTON ASSISTANT_LABEL USER_LABEL OPEN_A
 "$MAESTRO" --device "$DEVICE" test -e "MESSAGE=$MSG" -e "PROMPT_INPUT=$PROMPT_INPUT" -e "SUBMIT_BUTTON=$SUBMIT_BUTTON" \
   -e "APP_ID=$APP_ID" "$ROOT/flows/ai/_subflows/send_chat_message.yaml" >/dev/null 2>&1 \
   || { echo "SEND FAILED"; exit 1; }
-echo "sent $(date +%T): $MSG"
+ACCT="$(cat "$ROOT/screenshots/.current_account" 2>/dev/null || echo "account unknown — use switch-account.sh")"
+echo "[$ACCT] sent $(date +%T): $MSG"
 adb -s "$DEVICE" exec-out screencap -p > "$SHOTS/${L}_sent.png"
 for _ in $(seq 1 $(( WAIT / 5 ))); do sleep 5; done
 hide_kb; sleep 1
 "$(dirname "$0")/screen.sh" "${L}_response" >/dev/null 2>&1
-echo "captured $(date +%T) $SHOTS/${L}_response.png"
+echo "[$ACCT] captured $(date +%T) $SHOTS/${L}_response.png"
 python3 - "$SHOTS/hierarchy/${L}_response.json" "$MSG" "${ASSISTANT_LABEL#text:}" "${USER_LABEL#text:}" \
   "$( [[ "$OPEN_ASSISTANT" == text:* ]] && printf '%s' "${OPEN_ASSISTANT#text:}" )" "${SAY_SKIP_TEXTS:-}" <<'PY'
 import sys, json, signal

@@ -61,16 +61,27 @@ id differences from Android, interstitials) belong in [`../app/ios-automation-no
 - **Start every standalone flow with `launchApp`.** Between separate `test` runs the app can drop to the home screen.
 - **Pre-filled text fields:** `eraseText` only deletes *before* the cursor, and `tapOn` puts the cursor where it lands
   (often mid-text) — the old value's tail survives. Clear with `repeat` ×3 of `tapOn` + `eraseText` (same as Android).
-- **Number pad keyboards** have no Done/return key: `hideKeyboard` fails. Tap an empty area of the screen (not a label) to
-  close it. While the keypad is up, a `tapOn` aimed at a button it covers types a digit instead.
+- **Number pad keyboards** have no Done/return key: `hideKeyboard` fails. A real click on empty space closes it, but
+  Maestro taps there (and swipes) may **not**. Enter the number last, or hand that one click to the tester. While the
+  keypad is up, a `tapOn` aimed at a button it covers types a digit instead.
+- **Off-screen element taps land on whatever is under their bounds** (a card below the fold → the tab bar). Scroll it
+  in first: `scrollUntilVisible` with `centerElement: true`.
+- **Tap reports are not proof.** A tap can report COMPLETED and do nothing (system sheets, frozen renderer). Confirm each
+  state change with a hierarchy read or `xcrun simctl io <udid> screenshot`.
+- **Reset orientation after a landscape screen.** After `setOrientation: LANDSCAPE_*`, set `PORTRAIT` again before
+  the next portrait screen — otherwise every point/swipe is rotated (a tap on the 5th star selects the 1st).
+- **`maestro hierarchy` takes 15–40 s while video plays.** Poll with a hard timeout and judge progress over time,
+  not by catching short-lived UI.
+- **Driver flakes** ("Failed to connect to /127.0.0.1:<port>", Connection refused): retry the call.
 - **`retryTapIfNoChange` (default on) taps twice when the hierarchy doesn't change** — toggles (pause/resume, play)
   flip back. Use `retryTapIfNoChange: false` on toggles.
 - **Overlays that close themselves within a second or two** can't be read with a separate hierarchy dump. Act on them in
   the same flow (tap, then tap the option right after), or hand the step to the tester.
 - **Modals queued for launch** (celebrations, promo sheets) may show on the *next* cold start rather than inline, and
   two modals can race — relaunch before asserting one, and log which one won.
-- **StoreKit review prompt ("Enjoying <App>?")** on the simulator: its buttons don't respond (to Maestro or a click).
-  Kill and relaunch the app.
+- **StoreKit review prompt ("Enjoying <App>?")** on the simulator: a system sheet in another process. Maestro taps
+  (text or point) report COMPLETED but don't reach it, and clicks don't work either. Kill and relaunch the app
+  (`simctl terminate` + `launch`).
 - **Document picker taps are flaky** (a tap on `"<file>, <kind>"` can report success without selecting). Check the
   screen after the tap; retry once, then ask the tester to pick.
 - **SpringBoard crash:** SpringBoard and the app can crash together inside `XCTAutomationSupport` (Maestro's XCUITest

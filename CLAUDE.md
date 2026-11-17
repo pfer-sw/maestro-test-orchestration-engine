@@ -68,6 +68,7 @@ Flavor ids are the keys of `config/flavors.json`.
 | Wiki pages mirrored locally | `npm run fetch-wiki -- <url\|slugId> --out=kb/wiki/<name>.md` (`WIKI_BASE_URL` + `WIKI_API_KEY`) |
 | Filing run results + evidence on a Gyro ticket (Hound test cases) | [`docs/workflows/hound-reporting.md`](docs/workflows/hound-reporting.md) · `npm run hound-report -- <hound.json>` · `npm run hound-status` |
 | Engineering decisions | [`docs/engineering-decisions.md`](docs/engineering-decisions.md) |
+| Before saying "new", generating a report, or handing off a file | [`docs/workflows/claims-and-scope.md`](docs/workflows/claims-and-scope.md) — history check, scope line OK'd by the tester, absolute path + `open -R` |
 | Wins (release-changing catches + the habit behind each) *(unit)* | [`docs/wins.md`](docs/wins.md) — add an entry when the tester credits a catch |
 
 When a run confirms or contradicts a product rule, update the rules file — not memory.
@@ -84,6 +85,9 @@ When a run confirms or contradicts a product rule, update the rules file — not
 
 If the MCP returns gRPC `UNAVAILABLE` or has not been restarted since a previous day, fall back to
 `~/.maestro/bin/maestro --device <id> test <flow>` and `adb`.
+**Scripted device runs use the CLI** (every MCP call opens a Viewer tab), each call under a hard timeout, one Maestro
+process at a time — [`docs/engine/maestro-android-notes.md`](docs/engine/maestro-android-notes.md#tooling-gotchas).
+Multi-account runs: `scripts/release-tools/switch-account.sh <account> [label]`.
 
 ---
 
