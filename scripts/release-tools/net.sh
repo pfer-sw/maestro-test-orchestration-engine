@@ -16,7 +16,7 @@ case "$1" in
            | awk -v s="${2:-00:00:00}" '$2 >= s' | sed -E "s/\?[^ ]*//; s#https://[^/]+##; s/I\/${TAG_RE}\([ 0-9]+\): //" ;;
   grep)  dump | grep -E -- "$2" ;;
   start) N="$SHOTS/capture/$2"; mkdir -p "$N"
-         ( adb -s "$DEVICE" logcat -v time -T 1 -s "$TAG:I" | redact >> "$N/net.log" ) &
+         ( adb -s "$DEVICE" logcat -v time -T 1 -s "$TAG:I" | redact >> "$N/net.log" ) </dev/null >/dev/null 2>&1 &   # detach fully: an inherited stdout makes `net.sh start | …` hang
          echo $! > "$N/net.pid"; echo "streaming -> $N/net.log" ;;
   stop)  N="$SHOTS/capture/$2"; P="$(cat "$N/net.pid")"; pkill -P "$P" 2>/dev/null; kill "$P" 2>/dev/null; rm -f "$N/net.pid"; echo "stopped $N/net.log" ;;
   *)     sed -n '2,8p' "$0" ;;
