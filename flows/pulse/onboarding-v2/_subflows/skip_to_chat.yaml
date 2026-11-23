@@ -1,0 +1,10 @@
+# From any post-activity onboarding step to the chat: taps Continue / Skip for now until the chat input shows.
+appId: com.swordhealth.guarda.dev
+---
+- repeat:
+    while: {notVisible: {id: "chat_input_text_field"}}
+    times: 6
+    commands:
+      - tapOn: {text: "(Continue|Skip for now)", optional: true}
+      - waitForAnimationToEnd: {timeout: 5000}
+- extendedWaitUntil: {visible: {id: "chat_input_text_field"}, timeout: 20000}

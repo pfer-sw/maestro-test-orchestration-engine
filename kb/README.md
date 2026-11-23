@@ -30,13 +30,13 @@ continues. `authored: true` sources are exempt.
 
 ## Current sources
 
-One example row per source type, matching `config/kb.json`. Replace with your unit's sources.
+Matches `config/kb.json`.
 
 | Source id | Type | Location | Notes |
 |---|---|---|---|
 | `local-supplements` | authored | `kb/local/` (tracked) | `kb/local/rules/` — product rules, see [`local/rules/README.md`](local/rules/README.md); `kb/local/release/` — runbooks, never injected (`excludeDirs: ["release"]`), see [`local/release/README.md`](local/release/README.md) |
-| *(example — replace)* GitHub source | synced mirror | `${GITHUB_ORG}/<repo-name>` → `kb/<outputDir>/` | `npm run sync-kb`; needs `GITHUB_TOKEN`. Skipped on every sync while `<repo-name>` is unfilled |
-| *(example — replace)* local checkout | synced mirror | `localPath: ${KB_LOCAL_SOURCE_PATH}` | read in place; refresh with `git pull` in that checkout |
+| `ai-documentation` | synced mirror (local checkout) | `localPath: ${AI_DOCUMENTATION_PATH:-~/sword-ai/ai-documentation}` → `docs/pulse/`, `docs/common/` | SWORDHealth/ai-documentation — what Phoenix's prompts are built from. Refresh with `git pull` in the checkout. Tag `pulse` |
+| `ai-services` | synced mirror (local checkout) | `localPath: ${AI_SERVICES_PATH:-~/sword-ai/ai-services}` → `src/monalisa/docs/`, `docs/` | SWORDHealth/ai-services — Phoenix (Monalisa) code + design docs. Reference only, never injected (no `protocolTags`) |
 
 ## Wiki pages (`kb/wiki/`)
 

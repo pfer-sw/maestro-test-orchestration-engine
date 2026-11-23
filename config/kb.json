@@ -8,28 +8,45 @@
       "id": "local-supplements",
       "authored": true,
       "outputDir": "kb/local",
-      "includeExtensions": [".md"],
-      "protocolTags": ["example-protocol", "cross-protocol"],
+      "includeExtensions": [
+        ".md"
+      ],
+      "protocolTags": [
+        "example-protocol",
+        "cross-protocol"
+      ],
       "_note": "Authored in this repo, no upstream owner. Not synced and never stale — `authored: true` exempts it from sync and staleness checks. Tracked in git: this is the only copy. Evaluator use is OPT-IN PER FILE: only files with frontmatter `evaluator: include` and a status other than `unverified` are injected (scripts/lib/kb-client.js). kb/local/release/ (runbooks) is also excluded by directory.",
-      "excludeDirs": ["release"]
+      "excludeDirs": [
+        "release"
+      ]
     },
     {
-      "id": "local-source",
-      "localPath": "${KB_LOCAL_SOURCE_PATH}",
-      "_note": "Example: a sibling checkout on the tester's machine (e.g. a product-docs repo). Unset variable → source skipped.",
-      "includeDirs": ["context"],
-      "excludeDirs": ["artifacts", "notes"],
-      "includeExtensions": [".md"],
-      "protocolTags": ["example-protocol", "cross-protocol", "tone", "copy"]
+      "id": "ai-documentation",
+      "localPath": "${AI_DOCUMENTATION_PATH:-~/sword-ai/ai-documentation}",
+      "_note": "SWORDHealth/ai-documentation — the product-authored docs injected into Phoenix's system prompts (constitution, 3WC world context, guardrail protocols, knowledge bases, evaluation rubric). Local checkout (clone over SSH; no GITHUB_TOKEN needed); refresh with `git pull` there. READ-ONLY: never edit, commit or push to this repo. Defaults to ~/sword-ai/<repo> when the variable is unset; a missing checkout → source skipped. Pulse docs alone are ~570 KB, far over tokenBudgetPerEval — see kb/README.md Known limitations before relying on injection.",
+      "includeDirs": [
+        "docs/pulse",
+        "docs/common"
+      ],
+      "includeExtensions": [
+        ".md"
+      ],
+      "protocolTags": [
+        "pulse"
+      ]
     },
     {
-      "id": "domain-rules",
-      "owner": "${GITHUB_ORG}",
-      "repo": "<repo-name>",
-      "branch": "main",
-      "paths": ["<path-in-repo>/"],
-      "outputDir": "kb/domain",
-      "protocolTags": ["example-protocol", "cross-protocol"]
+      "id": "ai-services",
+      "localPath": "${AI_SERVICES_PATH:-~/sword-ai/ai-services}",
+      "_note": "SWORDHealth/ai-services — Phoenix (Monalisa agent) code and design docs. Reference for Claude while authoring cases (guardrails, escalation, events, evals); never injected into the evaluator (no protocolTags). Local checkout; refresh with `git pull` there. READ-ONLY: never edit, commit or push to this repo.",
+      "includeDirs": [
+        "src/monalisa/docs",
+        "docs"
+      ],
+      "includeExtensions": [
+        ".md"
+      ],
+      "protocolTags": []
     }
   ]
 }

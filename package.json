@@ -17,7 +17,8 @@
     "viewer:install": "bash tools/vscode-maestro-viewer/build-vsix.sh",
     "trace": "node scripts/llm-trace.js",
     "hound-report": "node scripts/hound-report.js",
-    "hound-status": "node scripts/hound-status.js"
+    "hound-status": "node scripts/hound-status.js",
+    "app-report": "node scripts/app-run-report.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.30.0",

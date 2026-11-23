@@ -1,0 +1,9 @@
+# Sends MSG in the 3-way chat and waits ~45 s for Phoenix's (multi-bubble) reply.
+# Env: MSG. There is no typing-indicator id (testability blocker), so the wait is a timeout.
+appId: com.swordhealth.guarda.dev
+---
+- tapOn: {id: "chat_input_text_field"}
+- inputText: ${MSG}
+- assertVisible: ${MSG}
+- tapOn: {id: "chat_send_button"}
+- extendedWaitUntil: {visible: "__never__", timeout: 45000, optional: true}

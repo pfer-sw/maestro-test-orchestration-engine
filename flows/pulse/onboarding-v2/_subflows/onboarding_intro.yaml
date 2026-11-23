@@ -1,0 +1,15 @@
+# From "Build my plan" to the first swipe card (movement readiness).
+# The caller then swipes the readiness card itself: RIGHT = clear, LEFT = flagged
+# (a conditional swipe inside a subflow did not fire on Maestro 2.12.1). Then run onboarding_swipes.yaml.
+# Fixed answers in onboarding_swipes.yaml: movement ≈ B (✗ on feet, ✓ up and about),
+# nutrition ✗ evenings ✗ breakfast (→ "everywhere"), check-in mornings ✓, barrier = time ✓.
+appId: com.swordhealth.guarda.dev
+---
+- tapOn: "Build my plan"
+- repeat:
+    times: 4
+    commands:
+      - extendedWaitUntil: {visible: "Continue", timeout: 10000}
+      - tapOn: "Continue"
+      - waitForAnimationToEnd: {timeout: 3000}
+- extendedWaitUntil: {visible: "I can move around today without pain or anything holding me back", timeout: 10000}

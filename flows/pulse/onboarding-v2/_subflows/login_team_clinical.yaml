@@ -1,0 +1,18 @@
+# Precondition: app data cleared and QA Menu open
+#   adb shell pm clear com.swordhealth.guarda.dev
+#   adb shell am start -n com.swordhealth.guarda.dev/com.swordhealth.guarda.qa.QAActivity
+# Env: TEST_USERNAME, TEST_PASSWORD
+appId: com.swordhealth.guarda.dev
+---
+- tapOn: "Team Clinical Endpoint"
+- tapOn: "Restart"
+- extendedWaitUntil: {visible: {id: "loginEmailTextfield"}, timeout: 40000}
+- tapOn: {id: "loginEmailTextfield"}
+- inputText: ${TEST_USERNAME}
+- tapOn: {id: "continueButton"}
+- extendedWaitUntil: {visible: {id: "loginPasswordTextfield"}, timeout: 15000}
+- inputText: ${TEST_PASSWORD}
+- tapOn: {id: "loginButton"}
+- extendedWaitUntil: {visible: "Not now", timeout: 30000}
+- tapOn: "Not now"
+- extendedWaitUntil: {visible: "Build my plan", timeout: 30000}

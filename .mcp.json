@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "maestro": {
+      "type": "stdio",
+      "command": "/home/gasilva/.maestro/bin/maestro",
+      "args": [
+        "mcp"
+      ],
+      "env": {}
+    }
+  }
+}

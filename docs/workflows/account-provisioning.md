@@ -41,6 +41,16 @@ production. Record which back-office user an account landed on (it may differ fr
 |---|---|---|---|
 | *(example — replace)* staging | Example Agent (1) | `example.agent` | `<test password>` |
 
+## Standard member test password (team-clinical)
+Pulse test members on **team-clinical** use the standard test password `12345Test_`, given by the
+tester on 2026-11-10. It is not secret internally, so it is recorded here and only here (CLAUDE.md rule 10).
+Pass it to flows as `TEST_PASSWORD`. Each account in `config/accounts.json` still names its
+`passwordEnvVar`, so `getEnvVars()` works once the tester adds the key to `.env`.
+
+Current Pulse accounts: `pulse.cool_warrior_355`, `pulse.fancy_champion_574`, `pulse.mighty_legend_464` (all `@swordhealth.com`; first one: program
+"Cardiometabolic - Overweight"). Care Unit Tools can create more (not yet documented: URL and steps
+still to be recorded).
+
 ## Your method
 Replace this section with your unit's procedure. Cover:
 

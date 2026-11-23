@@ -5,14 +5,156 @@
     {
       "id": "example.member",
       "email": "qa+example.member@example.com",
-      "flavor": ["main"],
+      "flavor": [
+        "main"
+      ],
       "passwordEnvVar": "ACCOUNT_EXAMPLE_MEMBER_PASS",
-      "tags": ["baseline"],
+      "tags": [
+        "baseline"
+      ],
       "traits": {
         "onboardingComplete": true,
         "plan": "free"
       },
       "notes": "Worked example. Default account for the baseline suite: logs straight into home_screen with no interstitials. Record here any post-login dialogs and the ids that dismiss them."
+    },
+    {
+      "id": "pulse.cool_warrior_355",
+      "email": "pulse_cool_warrior_355@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_COOL_WARRIOR_355_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "program": "Cardiometabolic - Overweight",
+        "onboardingV2": true,
+        "memberName": "Leia",
+        "benefit": "Pulse With Nutrition",
+        "onboardingStarted": true,
+        "introActivityDone": false,
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-10 (not created by Claude). Uses the standard team-clinical test password (docs/workflows/account-provisioning.md). The app must be on Team Clinical Endpoint (QA Menu) before login. Verified 2026-11-10, app 8.7.0: login → Create PIN ('Not now') → MonaLisaActivity 'Welcome, Leia' / 'Build my plan', i.e. onboarding v2 not yet started. Tapping 'Build my plan' starts onboarding and uses up this first-entry state. USED 2026-11-10: onboarding v2 done (intro activity skipped, wearable skipped); chat ran A-02/C-01/C-06/C-07/I-02, ending with a chest-pain escalation to the HS (Kimberly Smith). No longer a fresh or first-entry account, and it now has an open escalation."
+    },
+    {
+      "id": "pulse.fancy_champion_574",
+      "email": "pulse_fancy_champion_574@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_FANCY_CHAMPION_574_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "onboardingV2": true,
+        "onboardingStarted": true,
+        "memberName": "Jaime",
+        "introActivityDone": true,
+        "activatedVia": "chat card, left at ~36 s (app: 'Activity completed')",
+        "movementBucket": "B (Phoenix plan: 4,000 steps + 3 sessions)",
+        "nutritionBucket": "everywhere (The Full Picture)",
+        "moduleChosen": "nutrition",
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-10 (Care Unit Tools, standard team-clinical test password). Planned use: Not activated in app → in chat: abandon intro activity at ~10 s (A-05), then complete it (D-01) → plan (B-02/B-03/E-01) → Nutrition → G-03. USED 2026-11-10: ran D-02 run 2 / D-01 / B-02 / B-03 / E-01 / G-03; ends with an allergy + renal-diet escalation to Kimberly Smith."
+    },
+    {
+      "id": "pulse.mighty_legend_464",
+      "email": "pulse_mighty_legend_464@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_MIGHTY_LEGEND_464_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "onboardingV2": true,
+        "onboardingStarted": true,
+        "memberName": "Lando",
+        "introActivityDone": true,
+        "readiness": "flagged",
+        "nutritionBucket": "everywhere",
+        "moduleChosen": "movement",
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-10 (Care Unit Tools, standard team-clinical test password). Planned use: Readiness flagged (✗ on 'I can move around today without pain…') + intro activity done in app → A-01/B-01 → plan → Movement → F-03/F-04/F-07. USED 2026-11-10: intro activity completed in onboarding (~4 min); ran A-01 / B-01 / B-03 run 2 / F-03 / F-04 / F-07; ends with a knee-surgery escalation to Kimberly Smith."
+    },
+    {
+      "id": "pulse.ninja_dragon_589",
+      "email": "pulse_ninja_dragon_589@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_NINJA_DRAGON_589_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "onboardingV2": true,
+        "onboardingStarted": true,
+        "memberName": "Peter",
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-18 (standard team-clinical test password). Planned use: Not activated → A-02/C-01/C-06/C-07 → abandon <30 s (A-05, D-02 run 1) → complete (D-01, D-02 run 2) → B-02/B-03/E-01 → Nutrition → G-03. USED 2026-11-18: A-02/C-01/C-06/C-07, activity completed in chat (D-01), B-02/B-03/E-01, Nutrition → G-03 (allergy escalation). A-05/D-02 run 1 attempted, missed (>30 s)."
+    },
+    {
+      "id": "pulse.swift_robot_474",
+      "email": "pulse_swift_robot_474@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_SWIFT_ROBOT_474_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "onboardingV2": true,
+        "onboardingStarted": true,
+        "memberName": "Bruce",
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-18 (standard team-clinical test password). Planned use: Not activated → C-01 (2nd data point) → I-02 chest pain. USED 2026-11-18: C-01 run 2, I-02 (chest-pain escalation)"
+    },
+    {
+      "id": "pulse.super_wizard_610",
+      "email": "pulse_super_wizard_610@swordhealth.com",
+      "flavor": [
+        "pulse"
+      ],
+      "passwordEnvVar": "ACCOUNT_PULSE_SUPER_WIZARD_610_PASS",
+      "tags": [
+        "pulse",
+        "onboarding-v2"
+      ],
+      "traits": {
+        "environment": "team-clinical",
+        "unit": "pulse",
+        "onboardingV2": true,
+        "onboardingStarted": true,
+        "memberName": "Éowyn",
+        "escalated": true
+      },
+      "notes": "Provided by the tester on 2026-11-18 (standard team-clinical test password). Planned use: Flagged readiness + intro activity done in app → A-01/B-01/B-03 flagged → Movement → F-03/F-04/F-07. USED 2026-11-18: flagged + activated: A-01/B-01/B-03 flagged/F-03/F-04/F-07 (surgery escalation)"
     }
   ]
 }

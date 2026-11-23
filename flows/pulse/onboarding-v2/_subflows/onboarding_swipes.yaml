@@ -1,0 +1,19 @@
+# From the second movement card ("I'm on my feet…", after the caller answered readiness) to the
+# intro-activity screen ("Unlock your pulse kit").
+appId: com.swordhealth.guarda.dev
+---
+- extendedWaitUntil: {visible: "I'm on my feet for most of the day", timeout: 10000}
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: LEFT}
+- assertVisible: "I'm up and about here and there"
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: RIGHT}
+- assertVisible: "Evenings are where it falls apart.*"
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: LEFT}
+- assertVisible: "Mornings are the weak spot.*"
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: LEFT}
+- assertVisible: "Mornings are when I'm most on top of things"
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: RIGHT}
+- assertVisible: "I know what I should be doing.*"
+- swipe: {from: {id: "three_way_chat_onboarding_swipe_deck"}, direction: RIGHT}
+- extendedWaitUntil: {visible: "All set!", timeout: 8000}
+- tapOn: "Continue"
+- extendedWaitUntil: {visible: "Unlock your pulse kit", timeout: 10000}

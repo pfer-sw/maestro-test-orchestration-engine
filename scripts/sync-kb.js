@@ -14,6 +14,7 @@ import { readFileSync, writeFileSync, mkdirSync, existsSync } from 'fs';
 import { resolve, dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 import minimist from 'minimist';
+import { expandEnvInConfig } from './lib/kb-client.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -23,10 +24,7 @@ const DRY_RUN = !!args['dry-run'];
 const REPO_FILTER = args.repo ?? null;
 
 function loadConfig() {
-  const raw = readFileSync(resolve(ROOT, 'config', 'kb.json'), 'utf8');
-  return JSON.parse(
-    raw.replace(/\$\{([^}]+)\}/g, (_, v) => process.env[v] ?? '')
-  );
+  return expandEnvInConfig(JSON.parse(readFileSync(resolve(ROOT, 'config', 'kb.json'), 'utf8')));
 }
 
 function loadManifest() {
@@ -89,8 +87,10 @@ async function syncRepo(repoConfig, config, manifest) {
   }
 
   // Local-checkout repos are not synced — user manages them via git pull
-  if (repoConfig.localPath) {
-    console.log(`  SKIP ${repoConfig.id}: local checkout at ${repoConfig.localPath} — run \`git pull\` there to update`);
+  if ('localPath' in repoConfig) {
+    console.log(repoConfig.localPath
+      ? `  SKIP ${repoConfig.id}: local checkout at ${repoConfig.localPath} — run \`git pull\` there to update`
+      : `  SKIP ${repoConfig.id}: local checkout path not set`);
     return 0;
   }
 

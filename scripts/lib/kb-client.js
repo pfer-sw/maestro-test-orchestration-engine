@@ -2,6 +2,7 @@ import { readFileSync, existsSync, readdirSync, statSync } from 'fs';
 import { execSync } from 'child_process';
 import { resolve, dirname, join, relative, extname, basename } from 'path';
 import { fileURLToPath } from 'url';
+import { homedir } from 'os';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..', '..');
@@ -10,9 +11,13 @@ function loadKbConfig() {
   return JSON.parse(readFileSync(resolve(ROOT, 'config', 'kb.json'), 'utf8'));
 }
 
-function expandEnvInConfig(config) {
+// `${VAR}` → env value or ''; `${VAR:-default}` → env value or default. A leading `~/` in the
+// default expands to the home directory (nothing loads .env into process.env, so a default lets
+// a source work on a machine that never set the variable).
+export function expandEnvInConfig(config) {
   return JSON.parse(
-    JSON.stringify(config).replace(/\$\{([^}]+)\}/g, (_, v) => process.env[v] ?? '')
+    JSON.stringify(config).replace(/\$\{([^}:]+)(?::-([^}]*))?\}/g, (_, v, def) =>
+      process.env[v] || (def ?? '').replace(/^~(?=\/)/, homedir()))
   );
 }
 
