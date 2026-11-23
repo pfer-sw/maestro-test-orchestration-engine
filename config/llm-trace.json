@@ -1,21 +1,21 @@
 {
-  "_note": "Optional — only for units whose in-app assistant is traced (Langfuse today). Drives scripts/llm-trace.js (`npm run trace`). Delete the file if the unit has no traces. Keys: one public/secret pair per project in .env (names below); the tester adds them, Claude never reads .env. See docs/engine/llm-traces.md.",
+  "_note": "Phoenix (Monalisa) traces for the Pulse 3-way chat on team-clinical. Drives scripts/llm-trace.js (`npm run trace`). Keys: the tester adds LANGFUSE_PUBLIC_KEY / LANGFUSE_SECRET_KEY to .env; Claude never reads .env. Lookup value = the member's program uuid (each Phoenix run uses thread_id = program_uuid, ai-services src/monalisa/processor.py); read it from the app's network log (`/patient-app/v1/programs/<uuid>/...`). See docs/engine/llm-traces.md.",
   "provider": "langfuse",
-  "host": "https://langfuse.example.com",
-  "hostEnvVar": "LLM_TRACE_HOST",
+  "host": "https://langfuse.staging.swordhealth.com",
+  "hostEnvVar": "LANGFUSE_HOST",
   "lookup": {
-    "description": "conversation or user id",
-    "metadataKey": "conversation_id"
+    "description": "member program uuid",
+    "metadataKey": "thread_id"
   },
-  "defaultProject": "assistant",
+  "defaultProject": "monalisa",
   "projects": {
-    "assistant": {
-      "name": "example-notes-assistant",
-      "explains": "assistant turns: what woke it, its reasoning, the tools it called, what it sent",
-      "publicKeyEnvVar": "LLM_TRACE_ASSISTANT_PUBLIC_KEY",
-      "secretKeyEnvVar": "LLM_TRACE_ASSISTANT_SECRET_KEY",
+    "monalisa": {
+      "name": "Monalisa (Phoenix) — staging",
+      "explains": "Phoenix turns: the event that woke it, its reasoning, the tools it called (send_message, escalate_to_clinician, …) and what it sent",
+      "publicKeyEnvVar": "LANGFUSE_PUBLIC_KEY",
+      "secretKeyEnvVar": "LANGFUSE_SECRET_KEY",
       "triggerFields": ["event_type", "trigger_events"],
-      "outputFlags": { "no_action (abstained)": "no_action" }
+      "outputFlags": {}
     }
   }
 }
