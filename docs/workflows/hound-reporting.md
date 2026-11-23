@@ -20,6 +20,15 @@ key). API contract: `<HOUND_BASE_URL>/api/openapi.json`, paths under `/api/hound
    two tickets' changes. A successful post stamps `filed` into the spec.
 4. `npm run hound-status` lists every run folder and whether it is filed, skipped or still to file.
 
+## Reading cases — Hound is the source of truth
+
+Test cases are **read from Hound on demand, not mirrored into the repo** (no copies in `docs/specs/`
+or `config/matrices/`). To build or run tests for a folder, fetch it live:
+`GET /api/hound/projects/<project>/test-cases?component=<component>&folder=<folderPath>&pageSize=200`
+(same `X-API-Key` + custom `User-Agent` as the client; query params: `search`, `folder`, `component`,
+`page`, `pageSize`). A Gyro UI link maps directly: `…/hound/<project>/test-cases?component=…&folder=…`.
+Flows may name the case key they cover (`# Hound: D-T940`) — that is the only link kept in the repo.
+
 ## Mandatory — file it or say why not
 
 **Every run that verifies a ticket's change files its pass/fail cases on that ticket** before the run
