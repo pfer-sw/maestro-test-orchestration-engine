@@ -18,7 +18,7 @@ note", "jot this down", "new note please") and each must lead to the right actio
 3. After each response: screenshot + hierarchy, then score every expected / unexpected behaviour with a Claude call using
    a matrix-specific verification prompt in `prompts/ai-flavor/<name>-verification.md`.
 4. Output JSON per row → `node scripts/generate-html-report.js <results.json>`.
-5. Rows that fail → one Jira bug per distinct failure mode (not per row), via `scripts/lib/jira-client.js`.
+5. Rows that fail → one bug per distinct failure mode (not per row), in the unit's tracker.
 
 Keep the model id configurable; run each row `minRunsPerTest` times and flag inconsistent rows.
 

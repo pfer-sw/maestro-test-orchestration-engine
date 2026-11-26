@@ -40,7 +40,7 @@ plumbing Claude calls into; on their own they do only the mechanical part.
 
 | | Claude-driven (Claude Code session) | Script-only (`npm run …`) |
 |---|---|---|
-| Run flows, record coverage, export to Jira | ✅ | ✅ |
+| Run flows, record coverage | ✅ | ✅ |
 | Baseline circuit breaker, failure screenshots | ✅ | ✅ |
 | BFS exploration and flow generation | ✅ | ✗ — helpers only |
 | Healing failed flows (`--heal`) | ✅ | ✗ — prepares the context, then stops |
@@ -75,7 +75,7 @@ npm run test -- --flavor=<flavor> --heal
 ```
 
 Builds an execution plan (`baseline` → `feature` → `ai`, critical-first within
-each), runs it, recalculates coverage and exports to Jira — this much the script
+each), runs it, recalculates coverage — this much the script
 does on its own. In a Claude session it also heals failures and fills coverage
 gaps with mini-explorations.
 
@@ -113,11 +113,11 @@ npm run coverage                                     # coverage snapshot
 | `npm run explore` | Phase 1 helpers — the BFS itself is Claude-driven |
 | `npm run test` | Phase 2 — execute, coverage, circuit breaker (healing needs Claude) |
 | `npm run coverage` | Recalculate coverage from JUnit output |
-| `npm run export-jira` | Push dashboard + file bugs (`--dry-run` supported) |
+| `npm run kb-lint` | Check links, anchors, the rules index, accounts and taxonomy — no device needed |
 | `npm run sync-kb` | Refresh the knowledge base from upstream repos |
 | `npm run dashboard` | Local coverage dashboard |
 | `npm run prd-eval` | Scenario eval from `config/scenarios/*.md` (optional) |
-| `npm run full-run` | test → coverage → export, in sequence |
+| `npm run full-run` | test → coverage, in sequence |
 
 ---
 
@@ -235,7 +235,7 @@ functional asserts miss (spacing, colours, truncation, missing icons) become fin
 ## Repository layout
 
 ```
-scripts/            Engine. Phase runners + lib/ (maestro, jira, accounts, kb, coverage)
+scripts/            Engine. Phase runners + lib/ (maestro, accounts, kb, coverage, hound) · hooks/ (guard, session status)
 prompts/            The actual intelligence — screen analysis, flow generation,
                     healing, semantic evaluation, design audit
 config/             flavors · accounts · global · test-cases · guardrails · kb · matrices/
@@ -315,16 +315,14 @@ tester adds its password.
 | `<FLAVOR>_APP_ID` | App id per flavor when there are several (e.g. `MEMBER_APP_ID`); each flavor maps it to `env.APP_ID` — see `config/README.md` → `flavors.json` |
 | `ACCOUNT_<ID>_PASS` | One per account in `accounts.json` |
 | `ANTHROPIC_API_KEY` | Claude-driven analysis, healing, evaluation |
-| `JIRA_*` | Dashboard + bug export (optional — falls back to `reports/coverage/`) |
 | `FIGMA_TOKEN` | Design-audit comparisons (optional) |
 | `GITHUB_TOKEN` / `GITHUB_ORG` | Knowledge-base sync (optional) |
 | `KB_LOCAL_SOURCE_PATH` | Local checkout path for a local-repo KB source (optional) |
 | `WIKI_BASE_URL` / `WIKI_API_KEY` | `npm run fetch-wiki` mirror of wiki pages (optional) |
 | `SPLASH` / `NET_LOG_TAG` / `FLAVOR` | `scripts/release-tools/` (see `_env.sh`). The tools load `.env` themselves (shell exports win); with several flavors they pick `<FLAVOR>_APP_ID`, so export `FLAVOR` (default `main`) |
 
-Optional integrations degrade gracefully: a missing `JIRA_*` writes coverage
-locally and logs; a failed Figma fetch skips the design audit; neither aborts a
-run.
+Optional integrations degrade gracefully: a failed Figma fetch skips the design
+audit and does not abort a run.
 
 ---
 

@@ -99,7 +99,7 @@ Droidrun as an optional exploration/experiment aid only — not as the regressio
 ### Why the value isn't the driver
 The differentiator is the layer *on top* of the driver, not the driver itself:
 taxonomy-as-source-of-truth, two-layer AI eval (`maestro_result` + `semantic_result`),
-design audit vs. Figma, healing loop, account resolution, and Jira coverage reporting.
+design audit vs. Figma, healing loop, account resolution, and coverage reporting.
 Any driver swap risks all of that and gains little.
 
 ### Artemis — rejected

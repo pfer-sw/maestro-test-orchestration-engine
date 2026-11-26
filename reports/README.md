@@ -14,7 +14,7 @@ non-negotiable 11). Put a new run in the right folder; never at the root.
 `adhoc/login_retest_2026-01-20/`.
 
 **Tool output — written by scripts, don't move or rename:** `raw/` (Maestro JUnit, `calculate-coverage.js`), `coverage/`
-(`export-jira.js`, coverage snapshots), `testability/` (`testability-report.js`), `design-audit/` (Figma audit), `ai_interactions/`
+(coverage snapshots), `testability/` (`testability-report.js`), `design-audit/` (Figma audit), `ai_interactions/`
 (`generate-html-report.js`), `prd_evals/` (`run-scenario-eval.js`).
 
 Inside a run folder: `RUN_LOG.md` (append-only), the HTML report(s) (`_v2`… never overwrite), single-bug reports `BUG-NNN_<slug>.html` +

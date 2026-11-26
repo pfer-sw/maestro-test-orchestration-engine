@@ -22,7 +22,7 @@ Ask in one go, numbered, so the tester can answer inline. Skip what the repo alr
 | 5 | Where does product knowledge live (PRDs, wiki, specs repo, Figma)? Which of it is authoritative? | `config/kb.json`, `kb/local/rules/`, `config/figma-mapping.json` |
 | 6 | Domain safety: anything Claude must never type, tap or trigger (real payments, messages to real people, regulated content)? | `CLAUDE.md` → *Unit-specific rules*, `config/global.json` `skipSelectors` |
 | 7 | Screens Claude can't drive (camera, sensors, biometrics, back-office) | `CLAUDE.md` hardware-gated handling, rules files |
-| 8 | Jira project / labels and the ids of the custom fields for coverage %, run date and flavor (or skip them), Figma access — or skip | `config/global.json` `jira` (incl. `customFields`), `.env` keys |
+| 8 | Figma access for the design audit — or skip | `config/figma-mapping.json`, `FIGMA_TOKEN` key name for the tester |
 | 9 | Typical users of the app (2–4 personas) and the release journeys that matter | `docs/personas.md`, `kb/local/release/` |
 
 ## 2. Write config (metadata only — never secrets)
@@ -42,9 +42,7 @@ Ask in one go, numbered, so the tester can answer inline. Skip what the repo alr
    domains. The placeholder sources `local-source` (`${KB_LOCAL_SOURCE_PATH}`) and `domain-rules`
    (`<repo-name>`) are examples: fill them with a real checkout / repo or delete them, and update
    the *Current sources* table in `kb/README.md` to match.
-4. `config/global.json` — `skipSelectors` from Q6, Jira from Q8. `jira.customFields` is not read
-   by the shipped scripts: fill in the project's real field ids if you extend `export-jira.js` to
-   use them, otherwise delete the example ids.
+4. `config/global.json` — `skipSelectors` from Q6.
 5. **Hand the tester the `.env` checklist** — every `${VAR}` and `passwordEnvVar` you referenced,
    as key names only. Claude cannot read or write `.env` / `.env.example`; wait for "done".
 

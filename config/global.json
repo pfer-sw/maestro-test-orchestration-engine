@@ -29,23 +29,6 @@
     "screenshotOnFailure": true,
     "failureScreenshotDir": "./screenshots/failures"
   },
-  "jira": {
-    "projectKey": "${JIRA_PROJECT_KEY}",
-    "coverageDashboardIssueKey": "${JIRA_DASHBOARD_ISSUE_KEY}",
-    "baseUrl": "${JIRA_BASE_URL}",
-    "apiToken": "${JIRA_API_TOKEN}",
-    "userEmail": "${JIRA_USER_EMAIL}",
-    "labels": [
-      "automated-testing",
-      "maestro-mcp"
-    ],
-    "bugIssueType": "Bug",
-    "customFields": {
-      "coveragePercent": "customfield_10100",
-      "testRunDate": "customfield_10101",
-      "flavor": "customfield_10102"
-    }
-  },
   "maestro": {
     "workspaceDir": "./.maestro",
     "defaultTimeoutMs": 30000,

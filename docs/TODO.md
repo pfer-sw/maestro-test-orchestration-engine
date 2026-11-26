@@ -1,6 +1,7 @@
 # Project to-do
 
-Open work for the framework. Newest items at the bottom of each section. Mark an item done with
+Open work for the **framework** (tooling, flows, harness). Product and release follow-ups — re-tests, items waiting on
+dev or product, runs left to finish — live in [`FOLLOW-UPS.md`](FOLLOW-UPS.md). Newest items at the bottom of each section. Mark an item done with
 `[x]` and the date; delete done items once the knowledge they produced is in `kb/` or `docs/`.
 
 ## Setup

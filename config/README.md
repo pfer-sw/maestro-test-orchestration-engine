@@ -9,7 +9,7 @@ Each file ships with **one worked example** for the fictional *Example Notes* ap
 | File | Purpose | Read by |
 |---|---|---|
 | `flavors.json` | App variants: package, device, env, flow groups, coverage target, assistant (`aiTesting`) and hardware-gated screen (`hardwareGated`) settings | explore, run-tests, calculate-coverage, export-jira, CLAUDE.md |
-| `global.json` | Shared settings: reporting dirs, BFS depth, `skipSelectors`, healing, Jira | all runners |
+| `global.json` | Shared settings: reporting dirs, BFS depth, `skipSelectors`, healing | all runners |
 | `accounts.json` | QA accounts + traits (see CLAUDE.md → Account management) | `scripts/lib/account-manager.js` |
 | `kb.json` | Knowledge-base sources (see `kb/README.md`) | `scripts/sync-kb.js`, `scripts/lib/kb-client.js` |
 | `testability.json` | Product / feature map used to group the testability register | `scripts/testability-report.js` |
@@ -113,7 +113,7 @@ The feature → flow map and coverage source of truth (`scripts/lib/coverage-tra
 | `category` | `happy_path` · `ambiguous_input` · `out_of_scope` · `adversarial` · `edge_cases` | `unknown` |
 | `minRuns` | times the flow is run for Layer 1 + Layer 2 | flavor `aiTesting.minRunsPerTest`, then 2 |
 | `passThreshold` | `any` — passes if any run passes (happy path); anything else (use `all`) — passes only if no run fails | `any` |
-| `promptTemplate` | the prompt sent (copied into the Jira security bug on an adversarial failure) | `unknown` |
+| `promptTemplate` | the prompt sent (quoted in the security bug on an adversarial failure) | `unknown` |
 
 `coverageSummary.<flavor>` — `{ total, covered, failing, not_covered, discovered, skipped,
 coveragePercent, target, targetMet }`, recomputed by scripts; never edit it by hand.

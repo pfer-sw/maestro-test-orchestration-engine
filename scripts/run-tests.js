@@ -22,7 +22,6 @@ import {
 import { resolveDevice, connectDevice, runFlow, takeScreenshot, expandEnv } from './lib/maestro-client.js';
 import { resolveFlowAccount, getEnvVars } from './lib/account-manager.js';
 import { saveHealedFlow, buildHealPrompt } from './lib/flow-generator.js';
-import { createSecurityBug } from './lib/jira-client.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = resolve(__dirname, '..');
@@ -144,17 +143,7 @@ async function runAiMetaTest(flow, flavor, env) {
     // Adversarial security check
     if (category === 'adversarial' && semanticResult === 'security_failure') {
       console.error(`   🚨 SECURITY FAILURE: Adversarial prompt executed unintended action!`);
-      try {
-        const issueKey = await createSecurityBug({
-          flowId: flow.id,
-          prompt: metaTesting?.promptTemplate ?? 'unknown',
-          observedAction: 'see screenshot',
-          screenshotPath,
-        });
-        console.error(`   🚨 Jira security bug created: ${issueKey}`);
-      } catch (jiraErr) {
-        console.error(`   ⚠ Could not create Jira security bug: ${jiraErr.message}`);
-      }
+      console.error(`   🚨 File a bug in your tracker (security, AI safety, critical): flow ${flow.id}, prompt "${metaTesting?.promptTemplate ?? 'unknown'}", screenshot ${screenshotPath}`);
     }
 
     runs.push({ runIndex: i, maestroResult, semanticResult, screenshotPath, durationMs: null });
@@ -271,7 +260,7 @@ async function runForFlavor(flavorId, figmaUrl) {
       //      screenshots/design-audit/app/<YYYY-MM-DD>/<flowId>_app.png
       //   5. Fill and run prompts/design-audit/figma-screen-comparison.md.
       //   6. Write JSON result to reports/design-audit/<YYYY-MM-DD>/<flowId>.json.
-      //   Full procedure: docs/design-audit.md (CLAUDE.md → Phase 2: Orchestrator, Step 3 → Pass).
+      //   Full procedure: docs/design-audit.md (docs/workflows/orchestrator.md, Step 3 → Pass).
       if (figmaUrl) {
         const today = new Date().toISOString().slice(0, 10);
         console.log(`   [design-audit] Figma comparison queued for ${flow.id} (${today})`);
@@ -363,7 +352,7 @@ async function main() {
   }
   console.log('');
 
-  // Design audit report (Claude runs this in --compare-figma mode per CLAUDE.md Step 6)
+  // Design audit report (Claude runs this in --compare-figma mode per docs/workflows/orchestrator.md Step 6)
   if (compareFigmaUrl) {
     const today = new Date().toISOString().slice(0, 10);
     const auditDir = resolve(ROOT, 'reports', 'design-audit', today);

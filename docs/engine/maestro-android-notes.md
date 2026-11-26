@@ -131,3 +131,21 @@ backend one. **Requires a debug build that logs HTTP** — on a release build `n
 - Web back-office tools (Claude in Chrome, Maestro web): [`web-back-office.md`](web-back-office.md)
 - Camera injection on the emulator: [`camera-injection.md`](camera-injection.md)
 - Missing ids: [`../testability/missing-resource-ids.md`](../testability/missing-resource-ids.md)
+
+## Flow speed — what step timings show
+Measure before optimising: `maestro test --debug-output <dir>` writes `commands.json` per flow with a duration per step
+(`SWITCH_TIMING=1 scripts/release-tools/switch-account.sh <account>` prints the slow ones). The debug output holds every
+`-e` value, passwords included — delete it after reading. Findings from a mid-range Android phone on a Compose app:
+- **A `when: visible` condition that is false costs 4–8 s** (it waits before giving up). Two in a row cost more than the
+  step they guard. Prefer one `extendedWaitUntil` on an id regex (`a|b|c`) for "whichever screen comes first", and a positive
+  `assertVisible` for a check that should be true (under 1.5 s).
+- **Every tap costs 4–6 s** whatever `waitToSettleTimeoutMs` says — the time goes into reading the hierarchy. Fewer steps is
+  the only saving.
+- **A Compose text field may have no text of its own** — the typed value sits in a child node, so `copyTextFrom` and `text:`
+  on the field id see an empty string and an "is the old value still there?" condition never matches. Assert the value as
+  text instead. `+` and `.` are regex characters: build the pattern in the flow
+  (`evalScript: ${output.pattern = VALUE.replace(/[^A-Za-z0-9@]/g, '.')}` → `assertVisible: ${output.pattern}`).
+- A long press on a pre-filled field may select all of it (device-dependent); typing then replaces the selection, no
+  `eraseText` needed. Verify with the assertion above and keep a slower fallback flow.
+- Budget: cold start to a known screen ~20 s; typing a 40-character email ~7 s.
+
